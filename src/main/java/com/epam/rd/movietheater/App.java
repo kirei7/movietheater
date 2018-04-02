@@ -1,4 +1,4 @@
-package com.epam.rd;
+package com.epam.rd.movietheater;
 
 /**
  * Hello world!
