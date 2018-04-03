@@ -5,8 +5,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-public class Ticket {
-    @Getter @Setter private Long id;
+public class Ticket extends UniqueEntity{
     @Getter @Setter private User user;
     @Getter @Setter private Event event;
     @Getter @Setter private LocalDateTime dateTime;

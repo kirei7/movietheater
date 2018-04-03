@@ -10,8 +10,7 @@ import java.util.NavigableSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-public class Event {
-    @Getter @Setter private Long id;
+public class Event extends UniqueEntity {
     @Getter @Setter private String name;
     @Getter @Setter private NavigableSet<LocalDateTime> airDates = new TreeSet<>();
     @Getter @Setter private double basePrice;
