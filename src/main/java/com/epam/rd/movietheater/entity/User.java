@@ -6,8 +6,7 @@ import lombok.Setter;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 
-public class User {
-    @Getter @Setter private Long id;
+public class User extends UniqueEntity{
     @Getter @Setter private String firstName;
     @Getter @Setter private String lastName;
     @Getter @Setter private String email;
