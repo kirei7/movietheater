@@ -1,8 +1,8 @@
 package com.epam.rd.movietheater.dao.impl;
 
 import com.epam.rd.movietheater.dao.UserDao;
-import com.epam.rd.movietheater.entity.User;
-import com.epam.rd.movietheater.entity.factory.UserFactory;
+import com.epam.rd.movietheater.model.entity.User;
+import com.epam.rd.movietheater.model.entity.factory.UserFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -1,6 +1,6 @@
 package com.epam.rd.movietheater.dao;
 
-import com.epam.rd.movietheater.entity.UniqueEntity;
+import com.epam.rd.movietheater.model.entity.UniqueEntity;
 
 import java.util.List;
 import java.util.Optional;

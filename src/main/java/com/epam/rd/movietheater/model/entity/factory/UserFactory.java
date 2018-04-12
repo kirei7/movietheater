@@ -1,6 +1,6 @@
-package com.epam.rd.movietheater.entity.factory;
+package com.epam.rd.movietheater.model.entity.factory;
 
-import com.epam.rd.movietheater.entity.User;
+import com.epam.rd.movietheater.model.entity.User;
 
 public abstract class UserFactory {
     public static User create(String firstName, String lastName, String email) {

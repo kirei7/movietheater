@@ -1,4 +1,4 @@
-package com.epam.rd.movietheater.entity;
+package com.epam.rd.movietheater.model.entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

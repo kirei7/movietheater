@@ -1,10 +1,13 @@
 package com.epam.rd.movietheater.dao.impl;
 
 import com.epam.rd.movietheater.dao.UserDao;
-import com.epam.rd.movietheater.entity.User;
+import com.epam.rd.movietheater.model.entity.User;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 public class InMemoryUserDao extends AbstractInMemoryDao<User> implements UserDao {
     @Override
     public Optional<User> getByEmail(String email) {

@@ -1,7 +1,7 @@
 package com.epam.rd.movietheater.dao.impl;
 
 import com.epam.rd.movietheater.dao.UniqueEntityDao;
-import com.epam.rd.movietheater.entity.UniqueEntity;
+import com.epam.rd.movietheater.model.entity.UniqueEntity;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

@@ -1,6 +1,6 @@
-package com.epam.rd.movietheater.service;
+package com.epam.rd.movietheater.service.auditorium;
 
-import com.epam.rd.movietheater.entity.Auditorium;
+import com.epam.rd.movietheater.model.Auditorium;
 
 import java.util.List;
 import java.util.Optional;
