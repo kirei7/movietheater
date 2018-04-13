@@ -25,13 +25,15 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BigDecimal getTicketsPrice(Event event, User user, List<Long> seats) {
+        User tempUser = new User(user);
         return seats.stream()
-                .map(seat -> calculateTicketPrice(event, user, seat))
+                .map(seat -> calculateTicketPrice(event, tempUser, seat))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
     private BigDecimal calculateTicketPrice(Event event, User user, Long seat) {
         BigDecimal rawPrice = bookingHelper.getTicketPrice(event, user, seat);
         BigDecimal discountPercents = new BigDecimal(discountService.getDiscount(user, event));
+        user.setTicketsBought(user.getTicketsBought() + 1);
         return applyDiscount(rawPrice, discountPercents);
     }
     private BigDecimal applyDiscount(BigDecimal price, BigDecimal discount) {

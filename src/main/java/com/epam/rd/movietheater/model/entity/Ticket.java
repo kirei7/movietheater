@@ -13,4 +13,5 @@ public class Ticket extends UniqueEntity{
     @Getter @Setter private LocalDateTime dateTime;
     @Getter @Setter private Long seat;
 
+
 }

@@ -18,8 +18,8 @@ public class Event extends UniqueEntity {
     @Getter @Setter private Auditorium auditorium;
     @Getter @Setter private Set<Long> reservedSeats = new HashSet<>();
 
-    public static enum Rating {
-        LOW, MID, HIGH;
+    public enum Rating {
+        LOW, MID, HIGH
     }
 
     public void addReservedSeat(Long seat) {

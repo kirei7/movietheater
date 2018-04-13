@@ -1,4 +1,4 @@
-package com.epam.rd.movietheater.model.entity.factory;
+package com.epam.rd.movietheater.model.factory;
 
 import com.epam.rd.movietheater.model.entity.User;
 
