@@ -4,6 +4,6 @@ import com.epam.rd.movietheater.model.entity.Event;
 
 import java.util.Optional;
 
-public interface EventDao extends UniqueEntityDao<Event> {
+public interface EventDao extends IdentifiableDao<Event> {
     Optional<Event> findByName(String name);
 }

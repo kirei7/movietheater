@@ -22,7 +22,7 @@ public class AuditoriumServiceImplTest {
         );
         AuditoriumSource auditoriumSource = Mockito.mock(AuditoriumSource.class);
         when(auditoriumSource.getAuditoriums()).thenReturn(new HashSet<>(auditoriums));
-        service = new AuditoriumServiceImpl(auditoriumSource);
+        service = new AuditoriumServiceImpl(auditoriumSource.getAuditoriums());
     }
 
     @Test

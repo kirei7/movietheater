@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @ToString
-public class Event extends UniqueEntity {
+public class Event extends IdentifiableEntity {
     @Getter @Setter private String name;
     @Getter @Setter private LocalDateTime airDate;
     @Getter @Setter private double basePrice;

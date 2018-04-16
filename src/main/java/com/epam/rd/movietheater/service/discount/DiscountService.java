@@ -1,10 +1,8 @@
 package com.epam.rd.movietheater.service.discount;
 
-import com.epam.rd.movietheater.model.entity.Event;
-import com.epam.rd.movietheater.model.entity.User;
-
-import java.time.LocalDate;
+import com.epam.rd.movietheater.model.entity.Ticket;
+import java.util.List;
 
 public interface DiscountService {
-    int getDiscount(User user, Event event);
+    void assignDiscounts(List<Ticket> tickets);
 }

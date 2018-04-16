@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import static org.junit.Assert.*;
-
 public class BookingServiceImplTest {
 
     private Auditorium auditorium;
@@ -41,6 +39,6 @@ public class BookingServiceImplTest {
 
         user = new User();
         user.setFirstName("TestUser");
-        user.setBirthDay(LocalDate.now().minusYears(21));
+        user.setBirthday(LocalDate.now().minusYears(21));
     }
 }

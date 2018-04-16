@@ -30,13 +30,10 @@ public class BookingHelper {
         this.ticketDao = ticketDao;
     }
 
-    public BigDecimal getTicketPrice(Event event, User user, Long seat) {
-        if (event.getReservedSeats().contains(seat)) {
-            throw new BookingService.SeatIsReservedException("Seat [" + seat + "] is already reserved!");
-        }
-        BigDecimal price = new BigDecimal(event.getBasePrice()).setScale(2, RoundingMode.HALF_UP);
+    public BigDecimal calculateTicketPrice(Ticket ticket) {
+        BigDecimal price = new BigDecimal(ticket.getEvent().getBasePrice());
         for (TicketPriceModifier m : priceModifiers) {
-            price = m.applyModificationTo(price, event, seat);
+            price = m.applyModificationTo(price, ticket.getEvent(), ticket.getSeat()).setScale(2, RoundingMode.HALF_UP);
         }
         return price;
     }

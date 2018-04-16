@@ -1,13 +1,13 @@
 package com.epam.rd.movietheater.dao.impl;
 
-import com.epam.rd.movietheater.dao.UniqueEntityDao;
-import com.epam.rd.movietheater.model.entity.UniqueEntity;
+import com.epam.rd.movietheater.dao.IdentifiableDao;
+import com.epam.rd.movietheater.model.entity.IdentifiableEntity;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-public abstract class AbstractInMemoryDao<T extends UniqueEntity> implements UniqueEntityDao<T> {
+public abstract class AbstractInMemoryDao<T extends IdentifiableEntity> implements IdentifiableDao<T> {
 
     protected AtomicLong counter = new AtomicLong();
     protected Map<Long, T> storage = new ConcurrentHashMap<>();

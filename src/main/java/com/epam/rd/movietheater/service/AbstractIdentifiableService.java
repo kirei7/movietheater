@@ -1,17 +1,16 @@
 package com.epam.rd.movietheater.service;
 
-import com.epam.rd.movietheater.dao.UniqueEntityDao;
-import com.epam.rd.movietheater.model.entity.UniqueEntity;
-import com.epam.rd.movietheater.service.UniqueEntityService;
+import com.epam.rd.movietheater.dao.IdentifiableDao;
+import com.epam.rd.movietheater.model.entity.IdentifiableEntity;
 
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractUniqueEntityService<T extends UniqueEntity, D extends UniqueEntityDao<T>> implements UniqueEntityService<T> {
+public abstract class AbstractIdentifiableService<T extends IdentifiableEntity, D extends IdentifiableDao<T>> implements IdentifiableEntityService<T> {
 
     protected D dao;
 
-    protected AbstractUniqueEntityService(D dao) {
+    protected AbstractIdentifiableService(D dao) {
         this.dao = dao;
     }
 

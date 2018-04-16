@@ -16,7 +16,7 @@ import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
 
-@Component
+@Component("AuditoriumSource")
 public class PropertyBasedAuditoriumSource implements AuditoriumSource {
 
     private Set<Auditorium> auditoriums;

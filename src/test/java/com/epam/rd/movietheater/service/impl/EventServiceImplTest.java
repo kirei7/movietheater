@@ -5,6 +5,7 @@ import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.service.event.EventServiceImpl;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Optional;
@@ -34,8 +35,8 @@ public class EventServiceImplTest {
 
     @Test
     public void findEventsInTimePeriod() {
-        LocalDateTime from = baseTime.minusHours(24);
-        LocalDateTime to = baseTime.plusHours(25);
+        LocalDate from = baseTime.minusHours(24);
+        LocalDate to = baseTime.plusHours(25);
 
         assertEquals(3, eventService.getForDateRange(from,to).size());
     }

@@ -3,13 +3,17 @@ package com.epam.rd.movietheater.service.booking;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.model.entity.User;
+import com.epam.rd.movietheater.model.factory.TicketFactory;
 import com.epam.rd.movietheater.service.discount.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -24,32 +28,20 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BigDecimal getTicketsPrice(Event event, User user, List<Long> seats) {
+    public List<Ticket> createTicketsForEvent(Event event, User user, long[] seats) {
         User tempUser = new User(user);
-        return seats.stream()
-                .map(seat -> calculateTicketPrice(event, tempUser, seat))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        List<Ticket> tickets = Arrays.stream(seats)
+                .mapToObj(seat -> TicketFactory.create(event, tempUser, seat))
+                .collect(toList());
+        calculateAndAssignPrices(tickets);
+        calculateAndAssignDiscounts(tickets);
+        return tickets;
     }
-    private BigDecimal calculateTicketPrice(Event event, User user, Long seat) {
-        BigDecimal rawPrice = bookingHelper.getTicketPrice(event, user, seat);
-        BigDecimal discountPercents = new BigDecimal(discountService.getDiscount(user, event));
-        user.setTicketsBought(user.getTicketsBought() + 1);
-        return applyDiscount(rawPrice, discountPercents);
+    private void calculateAndAssignPrices(List<Ticket> tickets) {
+        tickets.forEach(ticket -> ticket.setBasePrice(bookingHelper.calculateTicketPrice(ticket)));
     }
-    private BigDecimal applyDiscount(BigDecimal price, BigDecimal discount) {
-        BigDecimal discountValue = price
-                                    .divide(new BigDecimal(100), 2, RoundingMode.HALF_UP)
-                                    .multiply(discount);
-        return price.subtract(discountValue);
+    private void calculateAndAssignDiscounts(List<Ticket> tickets) {
+        discountService.assignDiscounts(tickets);
     }
 
-    @Override
-    public void bookTickets(List<Ticket> tickets) {
-        tickets.forEach(ticket -> bookingHelper.bookTicket(ticket));
-    }
-
-    @Override
-    public List<Ticket> getPurchasedTicketsForEvent(Event event) {
-        return bookingHelper.getPurchasedTicketsForEvent(event);
-    }
 }

@@ -8,13 +8,5 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface BookingService {
-    BigDecimal getTicketsPrice(Event event, User user, List<Long> seats);
-    void bookTickets(List<Ticket> tickets);
-    List<Ticket> getPurchasedTicketsForEvent(Event event);
-
-    class SeatIsReservedException extends RuntimeException {
-        public SeatIsReservedException(String message) {
-            super(message);
-        }
-    }
+    List<Ticket> createTicketsForEvent(Event event, User user, long[] seats);
 }

@@ -1,13 +1,11 @@
 package com.epam.rd.movietheater.service.auditorium;
 
 import com.epam.rd.movietheater.model.Auditorium;
-import com.epam.rd.movietheater.service.auditorium.AuditoriumService;
 import com.epam.rd.movietheater.util.AuditoriumSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.*;
 
 @Service
@@ -16,8 +14,8 @@ public class AuditoriumServiceImpl implements AuditoriumService {
     private final Set<Auditorium> auditoriums;
 
     @Autowired
-    public AuditoriumServiceImpl(AuditoriumSource auditoriumSource) {
-        this.auditoriums = Collections.unmodifiableSet(auditoriumSource.getAuditoriums());
+    public AuditoriumServiceImpl(@Value("#{AuditoriumSource.getAuditoriums()}") Set<Auditorium> auditoriums) {
+        this.auditoriums = auditoriums;
     }
 
     @Override

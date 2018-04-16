@@ -4,14 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 @ToString
-public class Ticket extends UniqueEntity{
+public class Ticket extends IdentifiableEntity {
     @Getter @Setter private User user;
     @Getter @Setter private Event event;
-    @Getter @Setter private LocalDateTime dateTime;
     @Getter @Setter private Long seat;
+    @Getter @Setter private BigDecimal basePrice;
+    @Getter @Setter private int discount;
 
 
 }
