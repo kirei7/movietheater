@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -35,15 +36,16 @@ public class EventServiceImplTest {
 
     @Test
     public void findEventsInTimePeriod() {
-        LocalDate from = baseTime.minusHours(24);
-        LocalDate to = baseTime.plusHours(25);
+        LocalDate from = baseTime.toLocalDate().minusDays(1);
+        LocalDate to = baseTime.toLocalDate().plusDays(2);
 
-        assertEquals(3, eventService.getForDateRange(from,to).size());
+        List<Event> events = eventService.getForDateRange(from,to);
+        assertEquals(3, events.size());
     }
 
     @Test
     public void findEventsToDate() {
-        assertEquals(2,eventService.getNextEvents(baseTime.plusHours(49)).size());
+        assertEquals(1,eventService.getNextEvents(baseTime.toLocalDate().plusDays(2)).size());
     }
 
     private EventDao mockDao() {
