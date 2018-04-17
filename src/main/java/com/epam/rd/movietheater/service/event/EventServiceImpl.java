@@ -28,11 +28,14 @@ public class EventServiceImpl extends AbstractIdentifiableService<Event, EventDa
     public List<Event> getForDateRange(LocalDate from, LocalDate to) {
         if (from.compareTo(to) >= 0)
             throw new IllegalArgumentException("Invalid datetime range : [" + from + ";" + to + "]");
+        from = from.minusDays(1);   //we need to include left bound in the result
+        return findForRange(from, to);
+    }
+    private List<Event> findForRange(LocalDate from, LocalDate to) {
         return dao.findAll().stream().filter(
                 event -> isInRange(from, to, event.getAirDate())
         ).collect(toList());
     }
-
     @Override
     public List<Event> getNextEvents(LocalDate to) {
         return getForDateRange(LocalDate.now(), to);
