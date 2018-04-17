@@ -1,6 +1,8 @@
 package com.epam.rd.movietheater;
 
 import com.epam.rd.movietheater.config.ApplicationConfig;
+import com.epam.rd.movietheater.config.IntegrationTestConfig;
+import com.epam.rd.movietheater.dao.TicketDao;
 import com.epam.rd.movietheater.model.Auditorium;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.Ticket;
@@ -15,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -22,11 +25,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = { ApplicationConfig.class })
+@ContextConfiguration(classes = {IntegrationTestConfig.class})
 public class IntegrationTest {
 
     private final Log logger = LogFactory.getLog(IntegrationTest.class);
@@ -37,18 +41,36 @@ public class IntegrationTest {
     private EventService eventService;
     @Autowired
     private AuditoriumService auditoriumService;
+    @Autowired
+    private TicketDao ticketDao;
+
+    @Autowired
+    @Qualifier("sampleAuditoriums")
+    private List<Auditorium> auditoriums;
+    @Autowired
+    @Qualifier("sampleEvents")
+    private List<Event> events;
+    @Autowired
+    @Qualifier("sampleUser")
+    private User user;
 
     @Test
     public void bookingServiceTest() {
-        Auditorium auditorium = auditoriumService.getAll().get(0);
-        Event event = EventFactory.create("Sample event",
-                LocalDateTime.now().withHour(12),
-                100,
-                Event.Rating.HIGH,
-                auditorium);
-        User user = UserFactory.create("Vlad", "Sereda", "vladyslav_sereda1@epam.com", LocalDate.now().minusYears(24));
-        List<Ticket> tickets = bookingService.createTicketsForEvent(event, user, new long[]{5,6,7});
-        assertEquals(3,tickets.size());
+        Auditorium auditorium = auditoriums.get(0);
+        Event event = events.get(0);
+        List<Ticket> tickets = bookingService.createTicketsForEvent(event, user, new long[]{5, 6, 7});
+        assertEquals(3, tickets.size());
+
+        bookingService.bookTickets(tickets);
+        List<Ticket> purchased = bookingService.getPurchasedTicketsForEvent(event);
+        assertEquals(tickets, purchased);
+
+        List<Ticket> tickets2 = bookingService.createTicketsForEvent(events.get(1), user, new long[]{5, 6});
+        bookingService.bookTickets(tickets2);
+        List<Ticket> purchased2 = bookingService.getPurchasedTicketsForEvent(events.get(1));
+        assertEquals(tickets2.size(), bookingService.getPurchasedTicketsForEvent(events.get(1)).size());
+
+        assertEquals(tickets.size() + tickets2.size(), ticketDao.findAll().size());
     }
 
     @Test
@@ -58,37 +80,9 @@ public class IntegrationTest {
 
     @Test
     public void eventServiceTest() {
-        List<Event> events = getSampleEvents();
         events.forEach(eventService::save);
         List<Event> saved = eventService.getAll();
         assertEquals(events.size(), saved.size());
-    }
-
-    private List<Event> getSampleEvents() {
-        Auditorium auditorium = auditoriumService.getAll().get(0);
-        List<Event> events = new ArrayList<>();
-        events.add(
-                EventFactory.create("Sample event",
-                        LocalDateTime.now().withHour(12),
-                        100,
-                        Event.Rating.HIGH,
-                        auditorium)
-        );
-        events.add(
-                EventFactory.create("Sample event 2",
-                        LocalDateTime.now().withHour(13),
-                        100,
-                        Event.Rating.HIGH,
-                        auditorium)
-        );
-        events.add(
-                EventFactory.create("Sample event 3",
-                        LocalDateTime.now().withHour(14),
-                        100,
-                        Event.Rating.HIGH,
-                        auditorium)
-        );
-        return events;
     }
 
 }

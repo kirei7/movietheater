@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +46,7 @@ public class EventServiceImplTest {
 
     @Test
     public void findEventsToDate() {
-        assertEquals(1,eventService.getNextEvents(baseTime.toLocalDate().plusDays(2)).size());
+        assertEquals(3,eventService.getNextEvents(baseTime.toLocalDate().plusDays(2)).size());
     }
 
     private EventDao mockDao() {
@@ -74,6 +75,10 @@ public class EventServiceImplTest {
 
     private Event newWithTimeOffset(Event target, int plusHours) {
         Event result = new Event();
+        result.setName(target.getName());
+        result.setAuditorium(target.getAuditorium());
+        result.setRating(target.getRating());
+        result.setReservedSeats(new HashSet<>(target.getReservedSeats()));
         result.setAirDate(target.getAirDate().plusHours(plusHours));
         return result;
     }
