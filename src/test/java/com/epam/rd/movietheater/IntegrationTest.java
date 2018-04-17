@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -54,4 +55,40 @@ public class IntegrationTest {
     public void auditoriumServiceTest() {
         assertEquals(2, auditoriumService.getAll().size());
     }
+
+    @Test
+    public void eventServiceTest() {
+        List<Event> events = getSampleEvents();
+        events.forEach(eventService::save);
+        List<Event> saved = eventService.getAll();
+        assertEquals(events.size(), saved.size());
+    }
+
+    private List<Event> getSampleEvents() {
+        Auditorium auditorium = auditoriumService.getAll().get(0);
+        List<Event> events = new ArrayList<>();
+        events.add(
+                EventFactory.create("Sample event",
+                        LocalDateTime.now().withHour(12),
+                        100,
+                        Event.Rating.HIGH,
+                        auditorium)
+        );
+        events.add(
+                EventFactory.create("Sample event 2",
+                        LocalDateTime.now().withHour(13),
+                        100,
+                        Event.Rating.HIGH,
+                        auditorium)
+        );
+        events.add(
+                EventFactory.create("Sample event 3",
+                        LocalDateTime.now().withHour(14),
+                        100,
+                        Event.Rating.HIGH,
+                        auditorium)
+        );
+        return events;
+    }
+
 }
