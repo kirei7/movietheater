@@ -44,4 +44,8 @@ public class BookingServiceImpl implements BookingService {
         discountService.assignDiscounts(tickets);
     }
 
+    @Override
+    public void bookTickets(List<Ticket> tickets) {
+
+    }
 }
