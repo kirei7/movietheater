@@ -4,7 +4,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @ToString(exclude = {"tickets"})
 @NoArgsConstructor
@@ -13,7 +14,7 @@ public class User extends IdentifiableEntity {
     @Getter @Setter private String lastName;
     @Getter @Setter private String email;
     @Getter @Setter private LocalDate birthday;
-    @Getter @Setter private List<Ticket> tickets = new ArrayList<>();
+    @Getter @Setter private Set<Ticket> tickets = new HashSet<>();
 
     public User(User other) {
         this.firstName = other.firstName;
