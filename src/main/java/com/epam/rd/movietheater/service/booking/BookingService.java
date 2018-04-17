@@ -10,4 +10,5 @@ import java.util.List;
 public interface BookingService {
     List<Ticket> createTicketsForEvent(Event event, User user, long[] seats);
     void bookTickets(List<Ticket> tickets);
+    List<Ticket> getPurchasedTicketsForEvent(Event event);
 }

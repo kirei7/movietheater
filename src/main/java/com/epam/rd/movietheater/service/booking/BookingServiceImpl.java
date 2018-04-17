@@ -46,6 +46,11 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void bookTickets(List<Ticket> tickets) {
+        tickets.forEach((bookingHelper::bookTicket));
+    }
 
+    @Override
+    public List<Ticket> getPurchasedTicketsForEvent(Event event) {
+        return bookingHelper.getPurchasedTicketsForEvent(event);
     }
 }
