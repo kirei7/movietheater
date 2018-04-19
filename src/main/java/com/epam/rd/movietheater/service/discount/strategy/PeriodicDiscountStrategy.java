@@ -17,6 +17,11 @@ public class PeriodicDiscountStrategy implements DiscountStrategy {
     @Override
     public int calculateDiscount(Ticket ticket) {
         User user = ticket.getUser();
-        return (user.getTickets().size() % 10 == 0) ? discountAmount : 0;
+        int retVal = 0;
+        int alreadyBought = user.getTickets().size();
+        if ((alreadyBought % 9) == 0 && alreadyBought != 0) {
+            retVal = discountAmount;
+        }
+        return retVal;
     }
 }

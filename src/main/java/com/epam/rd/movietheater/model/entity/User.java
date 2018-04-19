@@ -17,6 +17,7 @@ public class User extends IdentifiableEntity {
     @Getter @Setter private Set<Ticket> tickets = new HashSet<>();
 
     public User(User other) {
+        this.id = other.id;
         this.firstName = other.firstName;
         this.lastName = other.lastName;
         this.email = other.email;
