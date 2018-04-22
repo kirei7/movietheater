@@ -1,4 +1,4 @@
-package com.epam.rd.movietheater.dao.impl;
+package com.epam.rd.movietheater.dao.impl.inmemory;
 
 import com.epam.rd.movietheater.dao.EventDao;
 import com.epam.rd.movietheater.model.entity.Event;
