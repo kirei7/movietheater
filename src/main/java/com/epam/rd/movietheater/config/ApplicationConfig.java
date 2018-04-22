@@ -1,12 +1,9 @@
 package com.epam.rd.movietheater.config;
 
-import com.epam.rd.movietheater.model.Auditorium;
-import com.epam.rd.movietheater.util.AuditoriumSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.*;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-
-import java.util.Set;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @ComponentScan("com.epam.rd.movietheater")

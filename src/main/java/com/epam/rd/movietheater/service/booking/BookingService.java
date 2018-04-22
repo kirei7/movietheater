@@ -4,7 +4,6 @@ import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.model.entity.User;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface BookingService {

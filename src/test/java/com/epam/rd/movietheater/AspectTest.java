@@ -2,7 +2,6 @@ package com.epam.rd.movietheater;
 
 import com.epam.rd.movietheater.aspect.CountAspect;
 import com.epam.rd.movietheater.aspect.DiscountAspect;
-import com.epam.rd.movietheater.config.ApplicationConfig;
 import com.epam.rd.movietheater.config.IntegrationTestConfig;
 import com.epam.rd.movietheater.dao.EventDao;
 import com.epam.rd.movietheater.model.entity.Event;
@@ -12,9 +11,6 @@ import com.epam.rd.movietheater.model.factory.TicketFactory;
 import com.epam.rd.movietheater.model.factory.UserFactory;
 import com.epam.rd.movietheater.service.booking.BookingHelper;
 import com.epam.rd.movietheater.service.booking.BookingService;
-import com.epam.rd.movietheater.service.discount.strategy.BirthdayDiscountStrategy;
-import com.epam.rd.movietheater.service.discount.strategy.PeriodicDiscountStrategy;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +20,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;

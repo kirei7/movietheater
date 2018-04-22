@@ -1,14 +1,11 @@
 package com.epam.rd.movietheater;
 
-import com.epam.rd.movietheater.config.ApplicationConfig;
 import com.epam.rd.movietheater.config.IntegrationTestConfig;
 import com.epam.rd.movietheater.dao.TicketDao;
 import com.epam.rd.movietheater.model.Auditorium;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.model.entity.User;
-import com.epam.rd.movietheater.model.factory.EventFactory;
-import com.epam.rd.movietheater.model.factory.UserFactory;
 import com.epam.rd.movietheater.service.auditorium.AuditoriumService;
 import com.epam.rd.movietheater.service.booking.BookingService;
 import com.epam.rd.movietheater.service.event.EventService;
@@ -21,11 +18,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 

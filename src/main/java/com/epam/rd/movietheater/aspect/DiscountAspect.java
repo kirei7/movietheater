@@ -1,6 +1,5 @@
 package com.epam.rd.movietheater.aspect;
 
-import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.model.entity.User;
 import com.epam.rd.movietheater.service.discount.strategy.DiscountStrategy;
