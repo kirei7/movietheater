@@ -33,7 +33,7 @@ public class EventServiceImpl extends AbstractIdentifiableService<Event, EventDa
     }
     private List<Event> findForRange(LocalDate from, LocalDate to) {
         return dao.findAll().stream().filter(
-                event -> isInRange(from, to, event.getAirDate())
+                event -> isInRange(from.atStartOfDay(), to.atStartOfDay(), event.getAirDate())
         ).collect(toList());
     }
     @Override
@@ -41,7 +41,7 @@ public class EventServiceImpl extends AbstractIdentifiableService<Event, EventDa
         return getForDateRange(LocalDate.now(), to);
     }
 
-    private boolean isInRange(LocalDate from, LocalDate to, LocalDateTime target) {
-        return target.toLocalDate().compareTo(from) >= 1 && target.toLocalDate().compareTo(to) <= -1;
+    private boolean isInRange(LocalDateTime from, LocalDateTime to, LocalDateTime target) {
+        return target.compareTo(from) >= 1 && target.compareTo(to) <= -1;
     }
 }

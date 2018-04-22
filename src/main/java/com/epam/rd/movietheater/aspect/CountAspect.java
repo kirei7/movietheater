@@ -40,7 +40,7 @@ public class CountAspect {
         Event target = targetTicket.getEvent();
         incrementCounterForEvent(target, accessedPrice);
     }
-    @Before(
+    @AfterReturning(
             "execution(public * com.epam.rd.movietheater.service.booking.BookingHelper.bookTicket(*))"
     )
     protected void countBookedTicketsForParticularEvent(JoinPoint joinPoint) {
@@ -61,15 +61,11 @@ public class CountAspect {
     }
 
     private Long getValue(Event event, Map<Event, AtomicLong> target) {
-        return (Optional.ofNullable(target.get(event)).orElse(new AtomicLong())).get();
+        return target.computeIfAbsent(event, k -> new AtomicLong()).get();
     }
 
     private void incrementCounterForEvent(Event event, Map<Event, AtomicLong> storage) {
-        AtomicLong counter = storage.get(event);
-        if (counter == null) {
-            counter = new AtomicLong();
-            storage.put(event, counter);
-        }
+        AtomicLong counter = storage.computeIfAbsent(event, k -> new AtomicLong());
         counter.incrementAndGet();
     }
 }
