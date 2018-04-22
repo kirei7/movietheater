@@ -9,6 +9,7 @@ import com.epam.rd.movietheater.model.entity.User;
 import com.epam.rd.movietheater.service.auditorium.AuditoriumService;
 import com.epam.rd.movietheater.service.booking.BookingService;
 import com.epam.rd.movietheater.service.event.EventService;
+import com.epam.rd.movietheater.service.user.UserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
@@ -30,6 +31,8 @@ public class IntegrationTest {
 
     private final Log logger = LogFactory.getLog(IntegrationTest.class);
 
+    @Autowired
+    private UserService userService;
     @Autowired
     private BookingService bookingService;
     @Autowired
@@ -66,6 +69,12 @@ public class IntegrationTest {
         assertEquals(tickets2.size(), bookingService.getPurchasedTicketsForEvent(events.get(1)).size());
 
         assertEquals(tickets.size() + tickets2.size(), ticketDao.findAll().size());
+    }
+
+    @Test
+    public void userServiceTest() {
+        userService.save(user);
+        assertEquals(user, userService.getUserByEmail(user.getEmail()).get());
     }
 
     @Test

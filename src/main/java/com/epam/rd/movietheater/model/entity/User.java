@@ -1,9 +1,6 @@
 package com.epam.rd.movietheater.model.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -11,6 +8,7 @@ import java.util.Set;
 
 @ToString(exclude = {"tickets"})
 @NoArgsConstructor
+@EqualsAndHashCode(of = {"id"})
 public class User extends IdentifiableEntity {
     @Getter @Setter private String firstName;
     @Getter @Setter private String lastName;
