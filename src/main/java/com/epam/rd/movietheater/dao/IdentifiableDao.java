@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IdentifiableDao<T extends IdentifiableEntity> {
-    T save(T user);
-    boolean remove(T user);
+    T save(T t);
+    boolean remove(T t);
     Optional<T> getById(Long id);
     List<T> findAll();
 }

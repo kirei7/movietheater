@@ -6,10 +6,13 @@ import com.epam.rd.movietheater.model.entity.User;
 import com.epam.rd.movietheater.model.factory.EventFactory;
 import com.epam.rd.movietheater.model.factory.UserFactory;
 import com.epam.rd.movietheater.service.auditorium.AuditoriumService;
+import com.epam.rd.movietheater.service.event.EventService;
+import com.epam.rd.movietheater.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,6 +22,14 @@ import java.util.List;
 public class TestDataConfig {
 
     private AuditoriumService auditoriumService;
+    private EventService eventService;
+    private UserService userService;
+
+    @PostConstruct
+    void setUp() {
+        sampleEvents().forEach(eventService::save);
+        userService.save(sampleUser());
+    }
 
     @Bean
     public List<Auditorium> sampleAuditoriums() {
@@ -39,8 +50,10 @@ public class TestDataConfig {
     }
 
     @Autowired
-    public TestDataConfig(AuditoriumService auditoriumService) {
+    public TestDataConfig(AuditoriumService auditoriumService, EventService eventService, UserService userService) {
         this.auditoriumService = auditoriumService;
+        this.eventService = eventService;
+        this.userService = userService;
     }
     private Event createSampleEvent(String name, Auditorium auditorium, int hour, Event.Rating rating) {
         return EventFactory.create(name,

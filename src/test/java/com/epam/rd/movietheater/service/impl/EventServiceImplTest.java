@@ -79,7 +79,7 @@ public class EventServiceImplTest {
         result.setName(target.getName());
         result.setAuditorium(target.getAuditorium());
         result.setRating(target.getRating());
-        result.setReservedSeats(new HashSet<>(target.getReservedSeats()));
+        result.setReservedTickets(new HashSet<>(target.getReservedTickets()));
         result.setAirDate(target.getAirDate().plusHours(plusHours));
         return result;
     }

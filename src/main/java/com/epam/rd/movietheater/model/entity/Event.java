@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,15 +18,14 @@ public class Event extends IdentifiableEntity {
     private double basePrice;
     private Rating rating;
     private Auditorium auditorium;
-    @Column
-    @ElementCollection(targetClass=Long.class)
-    private Set<Long> reservedSeats = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH)
+    private Set<Ticket> reservedTickets;
 
     public enum Rating {
         LOW, MID, HIGH
     }
 
-    public void addReservedSeat(Long seat) {
-        reservedSeats.add(seat);
+    public void addReservedTicket(Ticket ticket) {
+        reservedTickets.add(ticket);
     }
 }

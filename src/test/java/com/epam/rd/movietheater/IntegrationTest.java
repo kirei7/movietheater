@@ -13,6 +13,7 @@ import com.epam.rd.movietheater.service.user.UserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +23,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -54,6 +56,12 @@ public class IntegrationTest {
     @Qualifier("sampleUser")
     private User user;
 
+    @Before
+    public void setUp() {
+        events.forEach(eventService::save);
+        userService.save(user);
+    }
+
     @Test
     public void bookingServiceTest() {
         Auditorium auditorium = auditoriums.get(0);
@@ -75,9 +83,7 @@ public class IntegrationTest {
 
     @Test
     public void userServiceTest() {
-        System.out.println("pause");
-        userService.save(user);
-        assertEquals(user, userService.getUserByEmail(user.getEmail()).get());
+        assertEquals(user, userService.getUserByEmail(user.getEmail()).orElse(new User()));
     }
 
     @Test

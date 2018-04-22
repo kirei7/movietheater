@@ -6,6 +6,7 @@ import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
@@ -13,8 +14,11 @@ import java.math.BigDecimal;
 @ToString
 @Getter @Setter
 public class Ticket extends IdentifiableEntity {
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
+    @ManyToOne
+    @JoinColumn(name = "event_id")
     private Event event;
     private Long seat;
     private BigDecimal basePrice;

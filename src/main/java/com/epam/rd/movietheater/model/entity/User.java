@@ -20,7 +20,7 @@ public class User extends IdentifiableEntity {
     private String lastName;
     private String email;
     private LocalDate birthday;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Ticket> tickets = new HashSet<>();
 
     public User(User other) {

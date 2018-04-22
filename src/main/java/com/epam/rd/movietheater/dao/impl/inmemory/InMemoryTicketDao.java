@@ -9,7 +9,6 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-@Repository
 public class InMemoryTicketDao extends AbstractInMemoryDao<Ticket> implements TicketDao {
     @Override
     public List<Ticket> findByEvent(Event event) {
