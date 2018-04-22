@@ -1,6 +1,6 @@
 package com.epam.rd.movietheater.config;
 
-import com.epam.rd.movietheater.model.Auditorium;
+import com.epam.rd.movietheater.model.entity.Auditorium;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.User;
 import com.epam.rd.movietheater.model.factory.EventFactory;

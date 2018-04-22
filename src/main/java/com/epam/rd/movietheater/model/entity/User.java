@@ -2,19 +2,26 @@ package com.epam.rd.movietheater.model.entity;
 
 import lombok.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-@ToString(exclude = {"tickets"})
+@Entity
+@Getter @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
+@ToString(exclude = {"tickets"})
 public class User extends IdentifiableEntity {
-    @Getter @Setter private String firstName;
-    @Getter @Setter private String lastName;
-    @Getter @Setter private String email;
-    @Getter @Setter private LocalDate birthday;
-    @Getter @Setter private Set<Ticket> tickets = new HashSet<>();
+    private String firstName;
+    private String lastName;
+    private String email;
+    private LocalDate birthday;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Ticket> tickets = new HashSet<>();
 
     public User(User other) {
         this.id = other.id;

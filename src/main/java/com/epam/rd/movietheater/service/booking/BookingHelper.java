@@ -39,14 +39,6 @@ public class BookingHelper {
     }
 
     public void bookTicket(Ticket ticket) {
-        User customer = ticket.getUser();
-        customer.addTicket(ticket);
-        userDao.save(customer);
-
-        Event event = ticket.getEvent();
-        event.addReservedSeat(ticket.getSeat());
-        eventDao.save(event);
-
         ticketDao.save(ticket);
     }
 

@@ -1,6 +1,6 @@
 package com.epam.rd.movietheater.util;
 
-import com.epam.rd.movietheater.model.Auditorium;
+import com.epam.rd.movietheater.model.entity.Auditorium;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Value;

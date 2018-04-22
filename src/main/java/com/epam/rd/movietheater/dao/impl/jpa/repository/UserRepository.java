@@ -1,0 +1,10 @@
+package com.epam.rd.movietheater.dao.impl.jpa.repository;
+
+import com.epam.rd.movietheater.model.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email);
+}

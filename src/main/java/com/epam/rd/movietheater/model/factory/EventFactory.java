@@ -1,6 +1,6 @@
 package com.epam.rd.movietheater.model.factory;
 
-import com.epam.rd.movietheater.model.Auditorium;
+import com.epam.rd.movietheater.model.entity.Auditorium;
 import com.epam.rd.movietheater.model.entity.Event;
 
 import java.time.LocalDateTime;

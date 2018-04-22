@@ -2,7 +2,7 @@ package com.epam.rd.movietheater;
 
 import com.epam.rd.movietheater.config.IntegrationTestConfig;
 import com.epam.rd.movietheater.dao.TicketDao;
-import com.epam.rd.movietheater.model.Auditorium;
+import com.epam.rd.movietheater.model.entity.Auditorium;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.model.entity.User;
@@ -12,6 +12,8 @@ import com.epam.rd.movietheater.service.event.EventService;
 import com.epam.rd.movietheater.service.user.UserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +58,8 @@ public class IntegrationTest {
     public void bookingServiceTest() {
         Auditorium auditorium = auditoriums.get(0);
         Event event = events.get(0);
-        List<Ticket> tickets = bookingService.createTicketsForEvent(event, user, new long[]{5, 6, 7});
-        assertEquals(3, tickets.size());
+        List<Ticket> tickets = bookingService.createTicketsForEvent(event, user, new long[]{5, 6});
+        assertEquals(2, tickets.size());
 
         bookingService.bookTickets(tickets);
         List<Ticket> purchased = bookingService.getPurchasedTicketsForEvent(event);
@@ -73,6 +75,7 @@ public class IntegrationTest {
 
     @Test
     public void userServiceTest() {
+        System.out.println("pause");
         userService.save(user);
         assertEquals(user, userService.getUserByEmail(user.getEmail()).get());
     }

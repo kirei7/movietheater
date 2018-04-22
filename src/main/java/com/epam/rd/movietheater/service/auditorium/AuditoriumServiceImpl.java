@@ -1,6 +1,6 @@
 package com.epam.rd.movietheater.service.auditorium;
 
-import com.epam.rd.movietheater.model.Auditorium;
+import com.epam.rd.movietheater.model.entity.Auditorium;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

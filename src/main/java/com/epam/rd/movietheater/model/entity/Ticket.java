@@ -4,15 +4,19 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
+@Entity
 @ToString
+@Getter @Setter
 public class Ticket extends IdentifiableEntity {
-    @Getter @Setter private User user;
-    @Getter @Setter private Event event;
-    @Getter @Setter private Long seat;
-    @Getter @Setter private BigDecimal basePrice;
-    @Getter @Setter private int discount;
-
-
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private User user;
+    private Event event;
+    private Long seat;
+    private BigDecimal basePrice;
+    private int discount;
 }

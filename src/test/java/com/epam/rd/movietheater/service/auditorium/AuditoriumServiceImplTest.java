@@ -1,6 +1,6 @@
 package com.epam.rd.movietheater.service.auditorium;
 
-import com.epam.rd.movietheater.model.Auditorium;
+import com.epam.rd.movietheater.model.entity.Auditorium;
 import com.epam.rd.movietheater.util.AuditoriumSource;
 import org.junit.Test;
 import org.mockito.Mockito;
