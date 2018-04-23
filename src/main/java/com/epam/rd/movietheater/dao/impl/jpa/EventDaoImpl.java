@@ -20,7 +20,7 @@ public class EventDaoImpl implements EventDao {
     }
 
     @Override
-    public Optional<Event> findByName(String name) {
+    public List<Event> findByName(String name) {
         return eventRepository.findByName(name);
     }
 

@@ -1,4 +1,4 @@
-package com.epam.rd.movietheater.service.impl;
+package com.epam.rd.movietheater.service;
 
 import com.epam.rd.movietheater.dao.EventDao;
 import com.epam.rd.movietheater.model.entity.Event;
@@ -7,10 +7,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -32,7 +29,7 @@ public class EventServiceImplTest {
 
     @Test
     public void findEventByName() {
-        Event result = eventService.getByName(sampleEvent.getName()).orElse(null);
+        Event result = eventService.getByName(sampleEvent.getName()).get(0);
         assertEquals(sampleEvent, result);
     }
 
@@ -52,7 +49,7 @@ public class EventServiceImplTest {
 
     private EventDao mockDao() {
         EventDao dao = mock(EventDao.class);
-        when(dao.findByName(sampleEvent.getName())).thenReturn(Optional.of(sampleEvent));
+        when(dao.findByName(sampleEvent.getName())).thenReturn(Collections.singletonList(sampleEvent));
         when(dao.findAll()).thenReturn(Arrays.asList(
                 newWithTimeOffset(sampleEvent, -12),
                 sampleEvent,

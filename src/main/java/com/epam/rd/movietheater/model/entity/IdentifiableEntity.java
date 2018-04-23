@@ -9,9 +9,11 @@ import java.io.Serializable;
 
 @MappedSuperclass
 @Getter @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "id")
 public abstract class IdentifiableEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    public Long id;
+
+
 }

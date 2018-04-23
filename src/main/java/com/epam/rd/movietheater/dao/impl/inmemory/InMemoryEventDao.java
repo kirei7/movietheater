@@ -2,13 +2,14 @@ package com.epam.rd.movietheater.dao.impl.inmemory;
 
 import com.epam.rd.movietheater.dao.EventDao;
 import com.epam.rd.movietheater.model.entity.Event;
-import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class InMemoryEventDao extends AbstractInMemoryDao<Event> implements EventDao {
     @Override
-    public Optional<Event> findByName(String name) {
-        return storage.values().stream().filter((event -> event.getName().equals(name))).findFirst();
+    public List<Event> findByName(String name) {
+        return storage.values().stream().filter((event -> event.getName().equals(name))).collect(toList());
     }
 }

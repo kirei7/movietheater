@@ -1,4 +1,4 @@
-package com.epam.rd.movietheater.service.booking;
+package com.epam.rd.movietheater.service;
 
 import com.epam.rd.movietheater.model.entity.Auditorium;
 import com.epam.rd.movietheater.model.entity.Event;

@@ -19,7 +19,7 @@ public class Event extends IdentifiableEntity {
     private Rating rating;
     private Auditorium auditorium;
     @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH)
-    private Set<Ticket> reservedTickets;
+    private Set<Ticket> reservedTickets = new HashSet<>();
 
     public enum Rating {
         LOW, MID, HIGH

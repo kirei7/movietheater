@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -20,7 +19,7 @@ public class EventServiceImpl extends AbstractIdentifiableService<Event, EventDa
     }
 
     @Override
-    public Optional<Event> getByName(String name) {
+    public List<Event> getByName(String name) {
         return dao.findByName(name);
     }
 

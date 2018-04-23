@@ -13,13 +13,14 @@ import java.util.Set;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"})
 @ToString(exclude = {"tickets"})
+@EqualsAndHashCode(callSuper = true, of = {"firstName", "lastName", "email", "birthday"})
 public class User extends IdentifiableEntity {
     private String firstName;
     private String lastName;
     private String email;
     private LocalDate birthday;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Ticket> tickets = new HashSet<>();
 

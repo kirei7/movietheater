@@ -11,6 +11,7 @@ import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
@@ -28,8 +29,8 @@ public class CountAspect {
             pointcut = "execution(public * com.epam.rd.movietheater.dao.EventDao.findByName(String))",
             returning = "retVal"
     )
-    protected void countAccessingByName(Optional<Event> retVal) {
-        retVal.ifPresent(event -> incrementCounterForEvent(event, accessesByName));
+    protected void countAccessingByName(List<Event> retVal) {
+        retVal.forEach(event -> incrementCounterForEvent(event, accessesByName));
     }
 
     @AfterReturning(
