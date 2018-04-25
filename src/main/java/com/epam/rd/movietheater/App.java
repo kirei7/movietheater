@@ -1,6 +1,6 @@
 package com.epam.rd.movietheater;
 
-import com.epam.rd.movietheater.server.JettyServer;
+import com.epam.rd.movietheater.server.TomcatServer;
 
 /**
  * Hello world!
@@ -8,9 +8,9 @@ import com.epam.rd.movietheater.server.JettyServer;
  */
 public class App 
 {
-    public static void main( String[] args )
+    public static void main( String[] args ) throws Exception
     {
-        JettyServer server = new JettyServer();
+        TomcatServer server = new TomcatServer();
         server.run();
     }
 }
