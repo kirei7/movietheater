@@ -7,8 +7,6 @@ import com.epam.rd.movietheater.dao.EventDao;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.model.entity.User;
-import com.epam.rd.movietheater.model.factory.TicketFactory;
-import com.epam.rd.movietheater.model.factory.UserFactory;
 import com.epam.rd.movietheater.service.booking.BookingHelper;
 import com.epam.rd.movietheater.service.booking.BookingService;
 import org.junit.Test;
@@ -71,7 +69,7 @@ public class AspectTest {
     @Test
     public void testCountingAccessesByPrice() {
         Event event = events.get(0);
-        List<Ticket> tickets = Stream.of(5L,6L,7L).map(seat -> TicketFactory.create(event, user, seat)).collect(toList());
+        List<Ticket> tickets = Stream.of(5L,6L,7L).map(seat -> new Ticket(event, user, seat)).collect(toList());
         tickets.forEach(bookingHelper::calculateTicketPrice);
         assertEquals(tickets.size(), countAspect.getAccessesToPrice(event));
     }
@@ -79,14 +77,14 @@ public class AspectTest {
     @Test
     public void testCountingBookedTicketsForParticularEvent() {
         Event event = events.get(0);
-        List<Ticket> tickets = LongStream.range(0,8).mapToObj(seat -> TicketFactory.create(event, user, seat)).collect(toList());
+        List<Ticket> tickets = LongStream.range(0,8).mapToObj(seat -> new Ticket(event, user, seat)).collect(toList());
         tickets.forEach(bookingHelper::bookTicket);
         assertEquals(tickets.size(), countAspect.getNumberOfBookedTickets(event));
     }
 
     @Test
     public void testCountDiscountsForUser() {
-        User user = UserFactory.create("John", "Doe", "eee@ee.com", LocalDate.now().minusYears(20));
+        User user = new User("John", "Doe", "eee@ee.com", LocalDate.now().minusYears(20));
         List<Ticket> tickets = bookingService.createTicketsForEvent(events.get(0), user, LongStream.range(0,11).toArray());
     }
 }

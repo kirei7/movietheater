@@ -3,8 +3,6 @@ package com.epam.rd.movietheater.config;
 import com.epam.rd.movietheater.model.entity.Auditorium;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.User;
-import com.epam.rd.movietheater.model.factory.EventFactory;
-import com.epam.rd.movietheater.model.factory.UserFactory;
 import com.epam.rd.movietheater.service.auditorium.AuditoriumService;
 import com.epam.rd.movietheater.service.event.EventService;
 import com.epam.rd.movietheater.service.user.UserService;
@@ -46,7 +44,7 @@ public class TestDataConfig {
     }
     @Bean
     public User sampleUser() {
-        return UserFactory.create("Vlad", "Sereda", "vladyslav_sereda1@epam.com", LocalDate.now().minusYears(24));
+        return new User("Vlad", "Sereda", "vladyslav_sereda1@epam.com", LocalDate.now().minusYears(24));
     }
 
     @Autowired
@@ -56,7 +54,7 @@ public class TestDataConfig {
         this.userService = userService;
     }
     private Event createSampleEvent(String name, Auditorium auditorium, int hour, Event.Rating rating) {
-        return EventFactory.create(name,
+        return new Event(name,
                 LocalDateTime.now().withHour(hour),
                 100,
                 rating,

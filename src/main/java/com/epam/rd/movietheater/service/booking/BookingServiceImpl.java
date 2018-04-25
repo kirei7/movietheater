@@ -3,7 +3,6 @@ package com.epam.rd.movietheater.service.booking;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.model.entity.User;
-import com.epam.rd.movietheater.model.factory.TicketFactory;
 import com.epam.rd.movietheater.service.discount.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ public class BookingServiceImpl implements BookingService {
     public List<Ticket> createTicketsForEvent(Event event, User user, long[] seats) {
         User tempUser = new User(user);
         List<Ticket> tickets = Arrays.stream(seats)
-                .mapToObj(seat -> TicketFactory.create(event, tempUser, seat))
+                .mapToObj(seat -> new Ticket(event, tempUser, seat))
                 .collect(toList());
         calculateAndAssignPrices(tickets);
         calculateAndAssignDiscounts(tickets);
