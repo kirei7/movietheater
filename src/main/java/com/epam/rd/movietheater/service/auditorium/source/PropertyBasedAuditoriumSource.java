@@ -1,4 +1,4 @@
-package com.epam.rd.movietheater.util;
+package com.epam.rd.movietheater.service.auditorium.source;
 
 import com.epam.rd.movietheater.model.entity.Auditorium;
 import com.google.gson.Gson;

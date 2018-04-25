@@ -2,7 +2,7 @@ package com.epam.rd.movietheater.service;
 
 import com.epam.rd.movietheater.model.entity.Auditorium;
 import com.epam.rd.movietheater.service.auditorium.AuditoriumServiceImpl;
-import com.epam.rd.movietheater.util.AuditoriumSource;
+import com.epam.rd.movietheater.service.auditorium.source.AuditoriumSource;
 import org.junit.Test;
 import org.mockito.Mockito;
 
