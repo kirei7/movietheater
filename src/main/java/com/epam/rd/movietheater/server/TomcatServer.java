@@ -4,6 +4,9 @@ import org.apache.catalina.startup.Tomcat;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class TomcatServer {
     private static final int PORT = getPort();
@@ -11,11 +14,13 @@ public class TomcatServer {
     public void run() throws Exception {
         String appBase = ".";
         Tomcat tomcat = new Tomcat();
-        tomcat.setBaseDir(createTempDir());
+        String tempDir = createTempDir();
+        tomcat.setBaseDir(tempDir);
         tomcat.setPort(PORT);
         tomcat.getHost().setAppBase(appBase);
         tomcat.addWebapp("", ".");
         tomcat.start();
+        createTempDirForFiles(tempDir);
         tomcat.getServer().await();
     }
 
@@ -30,7 +35,7 @@ public class TomcatServer {
     // based on AbstractEmbeddedServletContainerFactory
     private static String createTempDir() {
         try {
-            File tempDir = File.createTempFile("tomcat.", "." + PORT);
+            File tempDir = File.createTempFile("tomcat", "-" + PORT);
             tempDir.delete();
             tempDir.mkdir();
             tempDir.deleteOnExit();
@@ -40,6 +45,15 @@ public class TomcatServer {
                     "Unable to create tempDir. java.io.tmpdir is set to " + System.getProperty("java.io.tmpdir"),
                     ex
             );
+        }
+    }
+    private static void createTempDirForFiles(String workingDirectory) {
+        try {
+            String destination = workingDirectory + "/work/Tomcat/localhost/ROOT/tmp";
+            Path path = Paths.get(destination);
+            Files.createDirectory(path);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
