@@ -20,7 +20,7 @@ public class Event extends IdentifiableEntity {
     private double basePrice;
     private Rating rating;
     private Auditorium auditorium;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.REFRESH)
     private Set<Ticket> reservedTickets = new HashSet<>();
 
     public Event(String name, LocalDateTime airDate, double basePrice, Event.Rating rating, Auditorium auditorium) {
