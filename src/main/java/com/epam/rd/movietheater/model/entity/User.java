@@ -12,7 +12,7 @@ import java.util.Set;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-@ToString(exclude = {"tickets"})
+@ToString(exclude = "tickets")
 @EqualsAndHashCode(callSuper = true, of = {})
 public class User extends IdentifiableEntity {
     private String firstName;

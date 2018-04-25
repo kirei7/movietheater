@@ -11,7 +11,7 @@ import java.util.Set;
 @ToString
 @Getter @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"name"})
+@EqualsAndHashCode(of = {"name"}, callSuper = false)
 public class Auditorium extends IdentifiableEntity {
     private String name;
     private long numberOfSeats;
