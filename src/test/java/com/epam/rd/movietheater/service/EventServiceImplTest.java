@@ -39,19 +39,19 @@ public class EventServiceImplTest {
         LocalDate to = baseTime.toLocalDate().plusDays(2);
 
         List<Event> events = eventService.getForDateRange(from,to);
-        assertEquals(3, events.size());
+        assertEquals(2, events.size());
     }
 
     @Test
     public void findEventsToDate() {
-        assertEquals(3,eventService.getNextEvents(baseTime.toLocalDate().plusDays(2)).size());
+        assertEquals(2,eventService.getNextEvents(baseTime.toLocalDate().plusDays(2)).size());
     }
 
     private EventDao mockDao() {
         EventDao dao = mock(EventDao.class);
         when(dao.findByName(sampleEvent.getName())).thenReturn(Collections.singletonList(sampleEvent));
         when(dao.findAll()).thenReturn(Arrays.asList(
-                newWithTimeOffset(sampleEvent, -12),
+                newWithTimeOffset(sampleEvent, -50),
                 sampleEvent,
                 newWithTimeOffset(sampleEvent, 24),
                 newWithTimeOffset(sampleEvent, 48),
