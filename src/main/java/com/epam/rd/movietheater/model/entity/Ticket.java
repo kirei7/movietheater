@@ -1,10 +1,7 @@
 package com.epam.rd.movietheater.model.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,6 +10,8 @@ import java.math.BigDecimal;
 @Entity
 @ToString
 @Getter @Setter
+@NoArgsConstructor
+@EqualsAndHashCode(of = {"event", "seat"}, callSuper = false)
 public class Ticket extends IdentifiableEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -23,4 +22,10 @@ public class Ticket extends IdentifiableEntity {
     private Long seat;
     private BigDecimal basePrice;
     private int discount;
+
+    public Ticket(Event event, User user, long seat) {
+        this.event = event;
+        this.user = user;
+        this.seat = seat;
+    }
 }
