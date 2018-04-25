@@ -3,7 +3,6 @@ package com.epam.rd.movietheater.dao.impl.inmemory;
 import com.epam.rd.movietheater.dao.TicketDao;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.Ticket;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

@@ -5,7 +5,6 @@ import com.epam.rd.movietheater.dao.TicketDao;
 import com.epam.rd.movietheater.dao.UserDao;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.Ticket;
-import com.epam.rd.movietheater.model.entity.User;
 import com.epam.rd.movietheater.service.booking.pricemodifier.TicketPriceModifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

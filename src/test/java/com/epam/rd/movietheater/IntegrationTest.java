@@ -12,9 +12,7 @@ import com.epam.rd.movietheater.service.event.EventService;
 import com.epam.rd.movietheater.service.user.UserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;

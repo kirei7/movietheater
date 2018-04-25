@@ -6,7 +6,6 @@ import com.epam.rd.movietheater.service.AbstractIdentifiableService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
