@@ -33,18 +33,24 @@ public class PropertyBasedAuditoriumSource implements AuditoriumSource {
             Properties props = PropertiesLoaderUtils.loadProperties(resource);
             auditoriums = fetchAuditoriums(props);
         } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            throw new AuditoriumSourceFileNotPresentException(fileName);
         }
     }
+
     private Set<Auditorium> fetchAuditoriums(Properties props) {
         return props.entrySet().stream()
                 .map(e -> mapFromEntry(e))
                 .collect(toSet());
     }
+
     private Auditorium mapFromEntry(Map.Entry<Object, Object> entry) {
-        String name = ((String)entry.getKey()).replace('_',' ');
-        Auditorium newAuditorium = gson.fromJson((String)entry.getValue(), Auditorium.class);
-        newAuditorium.setName(name);
-        return newAuditorium;
+        String name = ((String) entry.getKey()).replace('_', ' ');
+        try {
+            Auditorium newAuditorium = gson.fromJson((String) entry.getValue(), Auditorium.class);
+            newAuditorium.setName(name);
+            return newAuditorium;
+        } catch (Exception ex) {
+            throw new WrongAuditoriumSourceFileFormatException("invalid json");
+        }
     }
 }
