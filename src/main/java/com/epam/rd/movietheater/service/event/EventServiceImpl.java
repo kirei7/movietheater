@@ -3,6 +3,7 @@ package com.epam.rd.movietheater.service.event;
 import com.epam.rd.movietheater.dao.EventDao;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.service.AbstractIdentifiableService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class EventServiceImpl extends AbstractIdentifiableService<Event, EventDao> implements EventService {
 
+    @Autowired
     public EventServiceImpl(EventDao dao) {
         super(dao);
     }
