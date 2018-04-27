@@ -5,7 +5,6 @@ import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,19 +41,17 @@ public class CountAspect {
     }
 
     @AfterReturning(
-            pointcut = "execution(public * com.epam.rd.movietheater.service.booking.BookingHelper.calculateTicketPrice(*))"
+            pointcut = "execution(public * com.epam.rd.movietheater.service.booking.BookingHelper.calculateTicketPrice(com.epam.rd.movietheater.model.entity.Ticket)) && args(ticket)"
     )
-    protected void countAccessesToPrice(JoinPoint joinPoint) {
-        Ticket targetTicket = (Ticket) joinPoint.getArgs()[0];
-        Event target = targetTicket.getEvent();
+    protected void countAccessesToPrice(Ticket ticket) {
+        Event target = ticket.getEvent();
         incrementCounterForEvent(target, accessedPrice);
     }
     @AfterReturning(
-            "execution(public * com.epam.rd.movietheater.service.booking.BookingHelper.bookTicket(*))"
+            "execution(public * com.epam.rd.movietheater.service.booking.BookingHelper.bookTicket(com.epam.rd.movietheater.model.entity.Ticket)) && args(ticket)"
     )
-    protected void countBookedTicketsForParticularEvent(JoinPoint joinPoint) {
-        Ticket targetTicket = (Ticket) joinPoint.getArgs()[0];
-        Event target = targetTicket.getEvent();
+    protected void countBookedTicketsForParticularEvent(Ticket ticket) {
+        Event target = ticket.getEvent();
         incrementCounterForEvent(target, bookedTickets);
     }
 
