@@ -1,4 +1,4 @@
-package com.epam.rd.movietheater.dao.aspect;
+package com.epam.rd.movietheater.aspect.dao.counter;
 
 import com.epam.rd.movietheater.model.entity.Event;
 import org.springframework.beans.factory.annotation.Autowired;

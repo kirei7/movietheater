@@ -1,6 +1,6 @@
 package com.epam.rd.movietheater.aspect;
 
-import com.epam.rd.movietheater.dao.aspect.AspectCounterDao;
+import com.epam.rd.movietheater.aspect.dao.counter.AspectCounterDao;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import org.apache.commons.logging.Log;
