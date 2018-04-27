@@ -1,7 +1,6 @@
 package com.epam.rd.movietheater;
 
 import com.epam.rd.movietheater.aspect.CountAspect;
-import com.epam.rd.movietheater.aspect.DiscountAspect;
 import com.epam.rd.movietheater.config.IntegrationTestConfig;
 import com.epam.rd.movietheater.dao.EventDao;
 import com.epam.rd.movietheater.model.entity.Event;
@@ -29,12 +28,10 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {IntegrationTestConfig.class})
 @DirtiesContext
-public class AspectTest {
+public class CountAspectTest {
 
     @Autowired
     private CountAspect countAspect;
-    @Autowired
-    private DiscountAspect discountAspect;
 
     @Autowired
     private EventDao eventDao;

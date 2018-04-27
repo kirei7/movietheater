@@ -1,5 +1,6 @@
 package com.epam.rd.movietheater.aspect;
 
+import com.epam.rd.movietheater.dao.aspect.AspectCounterDao;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import org.apache.commons.logging.Log;
@@ -7,21 +8,30 @@ import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Aspect
 @Component
 public class CountAspect {
 
     private final Log logger = LogFactory.getLog(CountAspect.class);
-    private Map<Event, AtomicLong> accessesByName = new HashMap<>();
-    private Map<Event, AtomicLong> accessedPrice = new HashMap<>();
-    private Map<Event, AtomicLong> bookedTickets = new HashMap<>();
+    private AspectCounterDao accessesByName;
+    private AspectCounterDao accessedPrice;
+    private AspectCounterDao bookedTickets;
+
+    @Autowired
+    public CountAspect(
+            @Qualifier("nameCounter") AspectCounterDao accessesByName,
+            @Qualifier("priceCounter") AspectCounterDao accessedPrice,
+            @Qualifier("ticketCounter") AspectCounterDao bookedTickets) {
+        this.accessesByName = accessesByName;
+        this.accessedPrice = accessedPrice;
+        this.bookedTickets = bookedTickets;
+    }
 
     @AfterReturning(
             pointcut = "execution(public * com.epam.rd.movietheater.dao.EventDao.findByName(String))",
@@ -59,12 +69,11 @@ public class CountAspect {
         return getValue(event, bookedTickets);
     }
 
-    private Long getValue(Event event, Map<Event, AtomicLong> target) {
-        return target.computeIfAbsent(event, k -> new AtomicLong()).get();
+    private Long getValue(Event event, AspectCounterDao dao) {
+        return dao.getValueFor(event);
     }
 
-    private void incrementCounterForEvent(Event event, Map<Event, AtomicLong> storage) {
-        AtomicLong counter = storage.computeIfAbsent(event, k -> new AtomicLong());
-        counter.incrementAndGet();
+    private void incrementCounterForEvent(Event event, AspectCounterDao dao) {
+        dao.incrementFor(event);
     }
 }
