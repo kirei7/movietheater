@@ -19,14 +19,13 @@ import java.util.concurrent.atomic.AtomicLong;
 public class DiscountAspect {
     private Map<User, Map<Class<? extends DiscountStrategy>, AtomicLong>> discountCount = new HashMap<>();
     @AfterReturning(
-            pointcut = "execution(public * com.epam.rd.movietheater.service.discount.strategy.DiscountStrategy.calculateDiscount(*))",
+            pointcut = "execution(public * com.epam.rd.movietheater.service.discount.strategy.DiscountStrategy.calculateDiscount(com.epam.rd.movietheater.model.entity.Ticket)) && args(ticket)",
             returning = "discountAmount"
     )
-    protected void countGivenDiscount(JoinPoint joinPoint, int discountAmount) {
+    protected void countGivenDiscount(JoinPoint joinPoint, Ticket ticket, int discountAmount) {
         if (discountAmount <= 0)
             return;
         DiscountStrategy strategy = (DiscountStrategy) joinPoint.getTarget();
-        Ticket ticket = (Ticket) joinPoint.getArgs()[0];
         incrementForUser(ticket.getUser(), strategy.getClass());
     }
     private void incrementForUser(User user, Class<? extends DiscountStrategy> strategyType) {
