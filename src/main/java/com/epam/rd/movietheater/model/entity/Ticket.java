@@ -2,9 +2,7 @@ package com.epam.rd.movietheater.model.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -21,7 +19,9 @@ public class Ticket extends IdentifiableEntity {
     private Event event;
     private Long seat;
     private BigDecimal basePrice;
-    private int discount;
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Discount discount;
 
     public Ticket(Event event, User user, long seat) {
         this.event = event;

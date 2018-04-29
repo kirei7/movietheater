@@ -6,28 +6,29 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Discount<T extends DiscountStrategy> {
-    private DiscountId discountId;
-    private Long timesGiven;
+public class Discount implements Serializable {
+    @Id
+    @Column(name =  "discount_id")
+    private Long id;
 
-    public Discount(Class<T> type, User user, Long timesGiven) {
-        discountId = new DiscountId(user, type);
-        this.timesGiven = timesGiven;
+    @MapsId
+    @OneToOne(mappedBy = "discount")
+    @JoinColumn(name = "discount_id")
+    private Ticket ticket;
+    private String type;
+    private int amount;
+
+    public Discount(String type, Ticket ticket, int amount) {
+        this.type = type;
+        this.ticket = ticket;
+        this.amount = amount;
     }
 
-    @Embeddable
-    @Getter @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public class DiscountId {
-        private User user;
-        private Class<T> type;
-    }
 }

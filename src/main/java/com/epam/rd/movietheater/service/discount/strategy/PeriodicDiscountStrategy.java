@@ -1,9 +1,12 @@
 package com.epam.rd.movietheater.service.discount.strategy;
 
+import com.epam.rd.movietheater.model.entity.Discount;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.model.entity.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class PeriodicDiscountStrategy implements DiscountStrategy {
@@ -14,13 +17,19 @@ public class PeriodicDiscountStrategy implements DiscountStrategy {
     private int discountAmount;
 
     @Override
-    public int calculateDiscount(Ticket ticket) {
-        User user = ticket.getUser();
-        int retVal = 0;
-        int alreadyBought = user.getTickets().size();
-        if ((alreadyBought % 9) == 0 && alreadyBought != 0) {
-            retVal = discountAmount;
+    public List<Ticket> calculateDiscount(List<Ticket> tickets) {
+        User user = tickets.get(0).getUser();
+        int alreadyBought = user.getTickets().size() + 1;
+        for (int i = 0; i < tickets.size(); i++) {
+            calculateForTicket(tickets.get(0), alreadyBought + i);
         }
-        return retVal;
+        return tickets;
+    }
+    private void calculateForTicket(Ticket ticket, int ticketNumber) {
+        if (ticketNumber % 10 == 0 && ticketNumber > 0) {
+            if (discountAmount > ticket.getDiscount().getAmount()) {
+                ticket.setDiscount(new Discount(getClass().getSimpleName(), ticket, discountAmount));
+            }
+        }
     }
 }

@@ -17,6 +17,4 @@ public abstract class IdentifiableEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
-
-
 }

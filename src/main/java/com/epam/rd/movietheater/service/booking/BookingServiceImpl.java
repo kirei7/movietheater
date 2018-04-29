@@ -26,9 +26,8 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<Ticket> createTicketsForEvent(Event event, User user, long[] seats) {
-        User tempUser = new User(user);
         List<Ticket> tickets = Arrays.stream(seats)
-                .mapToObj(seat -> new Ticket(event, tempUser, seat))
+                .mapToObj(seat -> new Ticket(event, user, seat))
                 .collect(toList());
         calculateAndAssignPrices(tickets);
         calculateAndAssignDiscounts(tickets);

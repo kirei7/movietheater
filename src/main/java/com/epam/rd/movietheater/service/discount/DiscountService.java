@@ -5,5 +5,5 @@ import com.epam.rd.movietheater.model.entity.Ticket;
 import java.util.List;
 
 public interface DiscountService {
-    void assignDiscounts(List<Ticket> tickets);
+    List<Ticket> assignDiscounts(List<Ticket> tickets);
 }

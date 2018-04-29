@@ -1,6 +1,7 @@
 package com.epam.rd.movietheater.aspect;
 
 import com.epam.rd.movietheater.aspect.service.DiscountCounterService;
+import com.epam.rd.movietheater.model.entity.Discount;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.model.entity.User;
 import com.epam.rd.movietheater.service.discount.strategy.DiscountStrategy;
@@ -9,6 +10,8 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 
 @Aspect
@@ -23,21 +26,24 @@ public class DiscountAspect {
     }
 
     @AfterReturning(
-            pointcut = "execution(public * com.epam.rd.movietheater.service.discount.strategy.DiscountStrategy.calculateDiscount(com.epam.rd.movietheater.model.entity.Ticket)) && args(ticket)",
-            returning = "discountAmount"
+            pointcut = "execution(public * com.epam.rd.movietheater.service.discount.DiscountService.assignDiscounts(*))",
+            returning = "tickets"
     )
-    protected void countGivenDiscount(JoinPoint joinPoint, Ticket ticket, int discountAmount) {
-        if (discountAmount <= 0)
-            return;
-        DiscountStrategy strategy = (DiscountStrategy) joinPoint.getTarget();
-        discountCounterService.incremetFor(strategy.getClass(), ticket.getUser());
+    protected void countGivenDiscount(JoinPoint joinPoint, List<Ticket> tickets) {
+        tickets.forEach(ticket -> {
+            Discount discount = ticket.getDiscount();
+            if (discount.getAmount() > 0) {
+                discountCounterService.incrementFor(discount.getType(), ticket.getUser());
+            }
+        });
+
     }
 
     public long getDiscountCount(Class<? extends DiscountStrategy> type) {
-        return discountCounterService.getCount(type);
+        return discountCounterService.getCount(type.getSimpleName());
     }
     public long getDiscountCount(Class<? extends DiscountStrategy> type, User user) {
-            return discountCounterService.getCount(type, user);
+            return discountCounterService.getCount(type.getSimpleName(), user);
     }
 
 }
