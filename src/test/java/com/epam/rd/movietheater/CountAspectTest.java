@@ -8,6 +8,7 @@ import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.model.entity.User;
 import com.epam.rd.movietheater.service.booking.BookingHelper;
 import com.epam.rd.movietheater.service.booking.BookingService;
+import com.epam.rd.movietheater.service.user.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,8 @@ public class CountAspectTest {
     private BookingHelper bookingHelper;
     @Autowired
     private BookingService bookingService;
+    @Autowired
+    private UserService userService;
 
     @Autowired
     @Qualifier("sampleEvents")
@@ -51,6 +54,7 @@ public class CountAspectTest {
     @PostConstruct
     public void init() {
         eventDao.save(events.get(0));
+        userService.save(user);
     }
 
     @Test
@@ -81,7 +85,8 @@ public class CountAspectTest {
 
     @Test
     public void testCountDiscountsForUser() {
-        User user = new User("John", "Doe", "eee@ee.com", LocalDate.now().minusYears(20));
-        List<Ticket> tickets = bookingService.createTicketsForEvent(events.get(0), user, LongStream.range(0,11).toArray());
+        User testUser = new User(user);
+        testUser.setBirthday(LocalDate.now().minusYears(20));
+        List<Ticket> tickets = bookingService.createTicketsForEvent(events.get(0), testUser, LongStream.range(0,11).toArray());
     }
 }

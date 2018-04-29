@@ -7,6 +7,8 @@ import com.epam.rd.movietheater.model.entity.User;
 import com.epam.rd.movietheater.service.booking.BookingService;
 import com.epam.rd.movietheater.service.discount.strategy.BirthdayDiscountStrategy;
 import com.epam.rd.movietheater.service.discount.strategy.PeriodicDiscountStrategy;
+import com.epam.rd.movietheater.service.user.UserService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class DiscountAspectTest {
     private DiscountAspect discountAspect;
     @Autowired
     private BookingService bookingService;
+    @Autowired
+    private UserService userService;
 
     @Autowired
     @Qualifier("sampleEvents")
@@ -46,12 +50,16 @@ public class DiscountAspectTest {
         user3.setFirstName("Third");
         user3.setId(3L);
 
+        userService.save(user);
+        userService.save(user2);
+        userService.save(user3);
+
         bookingService.createTicketsForEvent(events.get(0), user, new long[]{1});
         bookingService.createTicketsForEvent(events.get(0), user2, new long[]{2});
-        bookingService.createTicketsForEvent(events.get(0), user3, new long[]{3});
+        bookingService.createTicketsForEvent(events.get(0), user3, new long[]{3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
 
-        assertEquals(3, discountAspect.getDiscountCount(BirthdayDiscountStrategy.class));
-        assertEquals(0, discountAspect.getDiscountCount(PeriodicDiscountStrategy.class));
+        assertEquals(12, discountAspect.getDiscountCount(BirthdayDiscountStrategy.class));
+        assertEquals(1, discountAspect.getDiscountCount(PeriodicDiscountStrategy.class));
         assertEquals(1, discountAspect.getDiscountCount(BirthdayDiscountStrategy.class, user));
     }
 }
