@@ -1,5 +1,6 @@
 package com.epam.rd.movietheater.service.discount.strategy;
 
+import com.epam.rd.movietheater.model.entity.Discount;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.model.entity.User;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class BirthdayDiscountStrategy implements DiscountStrategy {
@@ -15,14 +18,19 @@ public class BirthdayDiscountStrategy implements DiscountStrategy {
     private int discountAmount;
 
     @Override
-    public int calculateDiscount(Ticket ticket) {
+    public List<Ticket> calculateDiscount(List<Ticket> tickets) {
         LocalDate now = LocalDate.now();
-        User user = ticket.getUser();
-        long dif = ChronoUnit.DAYS.between(user.getBirthday(), now.withYear(user.getBirthday().getYear()));
-        dif = Math.abs(dif);
-        if (dif <= 5)
-            return discountAmount;
-        else
-            return 0;
+        tickets.forEach(ticket -> {
+            int calculatedDiscount = 0;
+            User user = ticket.getUser();
+            long dif = ChronoUnit.DAYS.between(user.getBirthday(), now.withYear(user.getBirthday().getYear()));
+            dif = Math.abs(dif);
+            if (dif <= 5)
+                calculatedDiscount = discountAmount;
+            if (calculatedDiscount > Optional.ofNullable(ticket.getDiscount()).orElse(new Discount()).getAmount()) {
+                ticket.setDiscount(new Discount(getClass().getSimpleName(), ticket, discountAmount));
+            }
+        });
+        return tickets;
     }
 }

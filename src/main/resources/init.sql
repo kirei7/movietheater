@@ -14,3 +14,11 @@ CREATE TABLE tickets_bought (
   id BIGINT PRIMARY KEY,
   counter BIGINT
 );
+
+DROP TABLE IF EXISTS discount_count;
+CREATE TABLE discount_count (
+  userId BIGINT,
+  discountType VARCHAR(256),
+  timesGiven BIGINT,
+  PRIMARY KEY (userId, discountType)
+);

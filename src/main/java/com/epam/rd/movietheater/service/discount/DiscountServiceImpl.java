@@ -20,15 +20,9 @@ public class DiscountServiceImpl implements DiscountService{
     }
 
     @Override
-    public void assignDiscounts(List<Ticket> tickets) {
-        User user = new User(tickets.get(0).getUser());
-        tickets.forEach(ticket -> {
-            ticket.setDiscount(getDiscount(ticket));
-            user.addTicket(ticket);
-        });
+    public List<Ticket> assignDiscounts(List<Ticket> tickets) {
+        discountStrategies.forEach(s -> s.calculateDiscount(tickets));
+        return tickets;
     }
 
-    private int getDiscount(Ticket ticket) {
-        return discountStrategies.stream().mapToInt(s -> s.calculateDiscount(ticket)).max().orElse(0);
-    }
 }
