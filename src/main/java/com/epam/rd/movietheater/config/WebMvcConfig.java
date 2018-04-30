@@ -26,8 +26,8 @@ public class WebMvcConfig implements WebMvcConfigurer, ApplicationContextAware {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-                .addResourceHandler("/resources/**")
-                .addResourceLocations("resources/");
+                .addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
     }
     @Bean
     public StandardServletMultipartResolver multipartResolver() {
@@ -37,7 +37,7 @@ public class WebMvcConfig implements WebMvcConfigurer, ApplicationContextAware {
     @Bean
     public ITemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-        templateResolver.setPrefix("classpath:/resources/view/");
+        templateResolver.setPrefix("classpath:/view/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode("LEGACYHTML5");
         templateResolver.setApplicationContext(applicationContext);
@@ -60,7 +60,7 @@ public class WebMvcConfig implements WebMvcConfigurer, ApplicationContextAware {
     @Bean
     public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource source = new ResourceBundleMessageSource();
-        source.setBasename("resources/messages/messages");
+        source.setBasename("messages/messages");
         source.setUseCodeAsDefaultMessage(true);
         return source;
     }

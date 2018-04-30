@@ -1,14 +1,16 @@
 package com.epam.rd.movietheater.controller;
 
-import com.epam.rd.movietheater.controller.userprovider.UserProvider;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.service.facade.BookingFacade;
+import com.epam.rd.movietheater.util.userprovider.UserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/booking")
 public class BookingController {
 
@@ -21,9 +23,13 @@ public class BookingController {
         this.bookingFacade = bookingFacade;
     }
 
-    @RequestMapping("/{eventId}")
-    public List<Ticket> previewTicketsForSelectedSeats(@PathVariable Long eventId, @RequestParam long[] seats) {
-        return bookingFacade.createTickets(eventId, userProvider.getCurrentUser(), seats);
+    @RequestMapping("/event/{eventId}")
+    public String previewTicketsForSelectedSeats(@PathVariable Long eventId, @RequestParam long[] seats, Model model) {
+        model.addAttribute(
+                "tickets",
+                bookingFacade.createTickets(eventId, userProvider.getCurrentUser(), seats)
+        );
+        return "preview";
     }
 
     @RequestMapping(path = "/{eventId}", method = RequestMethod.POST)
