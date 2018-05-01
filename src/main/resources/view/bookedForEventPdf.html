@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Events</title>
+</head>
+<body>
+<h1 th:text="|Booked tickets for event: ${event.name}|"></h1>
+<ul>
+    <li th:each="ticket : ${tickets}">
+        <p th:text="${ticket}"></p>
+    </li>
+</ul>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.epam.rd.movietheater.config;
 
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -48,6 +49,7 @@ public class WebMvcConfig implements WebMvcConfigurer, ApplicationContextAware {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.setTemplateEngineMessageSource(messageSource());
+        templateEngine.addDialect(new LayoutDialect());
         return templateEngine;
     }
     @Bean

@@ -3,7 +3,9 @@ package com.epam.rd.movietheater.config;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.User;
 import com.epam.rd.movietheater.service.IdentifiableEntityService;
+import com.epam.rd.movietheater.service.auditorium.AuditoriumService;
 import com.epam.rd.movietheater.service.event.EventService;
+import com.epam.rd.movietheater.service.facade.BookingFacade;
 import com.epam.rd.movietheater.service.user.UserService;
 import com.epam.rd.movietheater.util.batchupload.BatchUploader;
 import com.epam.rd.movietheater.util.batchupload.JsonBatchUploader;
@@ -14,6 +16,9 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
+import javax.annotation.PostConstruct;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,5 +47,25 @@ public class BaseConfig {
         map.put(User.class, userService);
         map.put(Event.class, eventService);
         return map;
+    }
+
+
+    @Autowired
+    private BookingFacade bookingFacade;
+    @Autowired
+    private AuditoriumService auditoriumService;
+
+    @PostConstruct
+    public void init() {
+        Event event = new Event("Film one",
+                LocalDateTime.now().plusHours(2),
+                15.00,
+                Event.Rating.HIGH,
+                auditoriumService.getAll().get(0)
+        );
+        User user = new User("Vlad", "Sereda", "mm@mm.com", LocalDate.now().minusYears(23));
+        eventService.save(event);
+        userService.save(user);
+        bookingFacade.buyTickets(event.getId(), user, new long[]{2, 3, 4, 5});
     }
 }

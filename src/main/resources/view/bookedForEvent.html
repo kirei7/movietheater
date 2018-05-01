@@ -1,0 +1,23 @@
+<!doctype html>
+<html layout:decorate="~{_layout}">
+<head>
+    <title>title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row text-center">
+        <h1 th:text="|Booked tickets for event: ${event.name}|"></h1>
+    </div>
+    <div class="row">
+        <div class="col-12" th:each="ticket : ${tickets}">
+            <p th:text="${ticket}"></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <a th:href="@{__${#httpServletRequest.requestURI}__/pdf}">Download in pdf</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
