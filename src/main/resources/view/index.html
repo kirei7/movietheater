@@ -1,0 +1,24 @@
+<!doctype html>
+<html layout:decorate="~{_layout}">
+<head>
+    <title>Upload form</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div>
+        <form method="post" action="batch/users" enctype="multipart/form-data">
+            <label for="file-users">User upload:</label>
+            <input type="file" name="file" id="file-users">
+            <button>Submit</button>
+        </form>
+    </div>
+    <div>
+        <form method="post" action="batch/events" enctype="multipart/form-data">
+            <label for="file-events">Event upload:</label>
+            <input type="file" name="file" id="file-events">
+            <button>Submit</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

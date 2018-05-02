@@ -1,0 +1,18 @@
+<!doctype html>
+<html layout:decorate="~{_layout}">
+<head>
+    <title>title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>Uploaded data:</h1>
+        </div>
+        <div class="col-12" th:each="item : ${uploadedList}">
+            <p th:text="${item}"></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,5 +1,7 @@
-package com.epam.rd.movietheater.config;
+package com.epam.rd.movietheater.server;
 
+import com.epam.rd.movietheater.config.ApplicationConfig;
+import com.epam.rd.movietheater.config.WebMvcConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.WebApplicationInitializer;
@@ -17,6 +19,7 @@ public class WebMvcInitializer implements WebApplicationInitializer {
 
     private String TMP_FOLDER = "/tmp";
     private int MAX_UPLOAD_SIZE = 5 * 1024 * 1024;
+
 
     @Override
     public void onStartup(ServletContext container) {
