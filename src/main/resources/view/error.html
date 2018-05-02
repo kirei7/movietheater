@@ -1,0 +1,16 @@
+<!doctype html>
+<html layout:decorate="~{_layout}">
+<head>
+    <title>title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h3>Something terrible happened, we aren't working to fix it. So sorry.</h3>
+            <p th:text="${exceptionMessage}"></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

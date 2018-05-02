@@ -40,6 +40,13 @@ public class EventController {
         return "events";
     }
 
+    @GetMapping(value = "/{eventId}")
+    public String findOne(@PathVariable Long eventId, Model model) {
+        model.addAttribute("event", eventService.getById(eventId).orElseThrow(EventNotFoundException::new));
+        return "events";
+    }
+
+
     @GetMapping(value = "/{eventId}/tickets", headers = "Accept=text/html")
     public String getTicketsForEventView(@PathVariable Long eventId, Model model) {
         Event event = eventService.getById(eventId).orElseThrow(EventNotFoundException::new);
