@@ -1,5 +1,7 @@
 package com.epam.rd.movietheater.service.auditorium.source;
 
+import com.epam.rd.movietheater.exception.AuditoriumSourceFileNotPresentException;
+import com.epam.rd.movietheater.exception.WrongAuditoriumSourceFileFormatException;
 import com.epam.rd.movietheater.model.entity.Auditorium;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

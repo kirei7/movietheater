@@ -1,4 +1,4 @@
-package com.epam.rd.movietheater.service.auditorium.source;
+package com.epam.rd.movietheater.exception;
 
 public class AuditoriumSourceFileNotPresentException extends RuntimeException {
     public AuditoriumSourceFileNotPresentException(String fileName) {
