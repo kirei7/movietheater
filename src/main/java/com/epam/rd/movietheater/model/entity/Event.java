@@ -1,14 +1,14 @@
 package com.epam.rd.movietheater.model.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -19,6 +19,7 @@ public class Event extends IdentifiableEntity {
     private String name;
     private LocalDateTime airDate;
     private double basePrice;
+    @Enumerated(EnumType.STRING)
     private Rating rating;
     private Auditorium auditorium;
     @OneToMany(mappedBy = "event", cascade = CascadeType.REFRESH)

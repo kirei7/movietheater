@@ -1,13 +1,14 @@
 package com.epam.rd.movietheater.model.entity;
 
+import com.epam.rd.movietheater.security.UserRole;
 import lombok.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @Getter @Setter
@@ -21,6 +22,11 @@ public class User extends IdentifiableEntity {
     private LocalDate birthday;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Ticket> tickets = new HashSet<>();
+    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "roles", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Set<UserRole> roles = Stream.of(UserRole.REGISTERED_USER).collect(Collectors.toSet());
 
     public User(String firstName, String lastName, String email, LocalDate birthday) {
         this.firstName = firstName;
@@ -40,5 +46,9 @@ public class User extends IdentifiableEntity {
 
     public void addTicket(Ticket ticket) {
         tickets.add(ticket);
+    }
+
+    public void addRole(UserRole role) {
+        roles.add(role);
     }
 }
