@@ -13,9 +13,10 @@ import java.util.stream.Stream;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-@ToString(exclude = "tickets")
+@ToString(exclude = {"tickets", "password"})
 @EqualsAndHashCode(callSuper = true, of = {})
 public class User extends IdentifiableEntity {
+
     private String firstName;
     private String lastName;
     private String email;
@@ -27,10 +28,19 @@ public class User extends IdentifiableEntity {
     @Column(name = "roles", nullable = false)
     @Enumerated(EnumType.STRING)
     private Set<UserRole> roles = Stream.of(UserRole.REGISTERED_USER).collect(Collectors.toSet());
+    @Column(unique = true, nullable = false)
+    private String nickName;
+    @Column(unique = true, nullable = false)
+    private String password;
 
-    public User(String firstName, String lastName, String email, LocalDate birthday) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String nickName, String password) {
+        this.nickName = nickName;
+        this.password = password;
+    }
+
+    public User(String nickName, String password, String email, LocalDate birthday) {
+        this.nickName = nickName;
+        this.password = password;
         this.email = email;
         this.birthday = birthday;
     }
