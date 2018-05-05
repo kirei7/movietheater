@@ -44,4 +44,9 @@ public class UserDaoImpl implements UserDao {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
+    @Override
+    public Optional<User> getByNickName(String nickName) {
+        return userRepository.findByNickName(nickName);
+    }
 }

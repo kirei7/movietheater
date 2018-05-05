@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface UserDao extends IdentifiableDao<User> {
     Optional<User> getByEmail(String email);
+
+    Optional<User> getByNickName(String nickName);
 }

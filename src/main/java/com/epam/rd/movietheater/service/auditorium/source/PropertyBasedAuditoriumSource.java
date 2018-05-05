@@ -41,7 +41,7 @@ public class PropertyBasedAuditoriumSource implements AuditoriumSource {
 
     private Set<Auditorium> fetchAuditoriums(Properties props) {
         return props.entrySet().stream()
-                .map(e -> mapFromEntry(e))
+                .map(this::mapFromEntry)
                 .collect(toSet());
     }
 

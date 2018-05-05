@@ -10,4 +10,9 @@ public class InMemoryUserDao extends AbstractInMemoryDao<User> implements UserDa
     public Optional<User> getByEmail(String email) {
         return storage.values().stream().filter(u -> u.getEmail().equals(email)).findFirst();
     }
+
+    @Override
+    public Optional<User> getByNickName(String nickName) {
+        return storage.values().stream().filter(u -> u.getNickName().equals(nickName)).findFirst();
+    }
 }

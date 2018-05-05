@@ -80,7 +80,7 @@ public class IntegrationTest {
 
     @Test
     public void userServiceTest() {
-        assertEquals(user, userService.getUserByEmail(user.getEmail()).orElse(new User()));
+        assertEquals(user, userService.getUserByEmail(user.getEmail()));
     }
 
     @Test

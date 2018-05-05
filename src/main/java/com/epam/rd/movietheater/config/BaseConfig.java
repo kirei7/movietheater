@@ -14,10 +14,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
-import javax.annotation.PostConstruct;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +55,7 @@ public class BaseConfig {
     @Autowired
     private AuditoriumService auditoriumService;
 
-    @PostConstruct
+    @EventListener({ContextRefreshedEvent.class})
     public void init() {
         Event event = new Event("Film one",
                 LocalDateTime.now().plusHours(2),
@@ -63,9 +63,7 @@ public class BaseConfig {
                 Event.Rating.HIGH,
                 auditoriumService.getAll().get(0)
         );
-        User user = new User("Vlad", "Sereda", "mm@mm.com", LocalDate.now().minusYears(23));
         eventService.save(event);
-        userService.save(user);
-        bookingFacade.buyTickets(event.getId(), user, new long[]{2, 3, 4, 5});
+        bookingFacade.buyTickets(event.getId(), userService.getUserByNickName("user"), new long[]{2, 3, 4, 5});
     }
 }

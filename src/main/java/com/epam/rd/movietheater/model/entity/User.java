@@ -21,7 +21,7 @@ public class User extends IdentifiableEntity {
     private String lastName;
     private String email;
     private LocalDate birthday;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Ticket> tickets = new HashSet<>();
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     @JoinTable(name = "roles", joinColumns = @JoinColumn(name = "user_id"))
@@ -30,7 +30,7 @@ public class User extends IdentifiableEntity {
     private Set<UserRole> roles = Stream.of(UserRole.REGISTERED_USER).collect(Collectors.toSet());
     @Column(unique = true, nullable = false)
     private String nickName;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String password;
 
     public User(String nickName, String password) {
