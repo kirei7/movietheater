@@ -34,7 +34,7 @@ public class BookingServiceImpl implements BookingService {
         return tickets;
     }
     private void calculateAndAssignPrices(List<Ticket> tickets) {
-        tickets.forEach(ticket -> ticket.setBasePrice(bookingHelper.calculateTicketPrice(ticket)));
+        tickets.forEach(ticket -> ticket.setPrice(bookingHelper.calculateTicketPrice(ticket)));
     }
     private void calculateAndAssignDiscounts(List<Ticket> tickets) {
         discountService.assignDiscounts(tickets);

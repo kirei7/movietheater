@@ -10,4 +10,6 @@ public interface BookingFacade {
      * with their prices and discounts*/
     List<Ticket> createTickets(Long eventId, User user, long[] seats);
     List<Ticket> buyTickets(Long eventId, User user, long[] seats);
+
+    void replenishAccount(User user, Long amount);
 }

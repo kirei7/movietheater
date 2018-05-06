@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-@ToString(exclude = {"tickets", "password"})
+@ToString(exclude = {"tickets", "password", "account"})
 @EqualsAndHashCode(callSuper = true, of = {})
 public class User extends IdentifiableEntity {
 
@@ -32,6 +32,8 @@ public class User extends IdentifiableEntity {
     private String nickName;
     @Column(nullable = false)
     private String password;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserAccount account;
 
     public User(String nickName, String password) {
         this.nickName = nickName;

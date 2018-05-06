@@ -18,7 +18,10 @@ public class Ticket extends IdentifiableEntity {
     @JoinColumn(name = "event_id")
     private Event event;
     private Long seat;
-    private BigDecimal basePrice;
+    /**
+     * Price without discount applied
+     */
+    private BigDecimal price;
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Discount discount;
