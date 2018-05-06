@@ -2,6 +2,7 @@ package com.epam.rd.movietheater.config;
 
 import com.epam.rd.movietheater.dao.impl.jpa.repository.JpaRepositoryMarker;
 import org.h2.jdbcx.JdbcDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,9 +56,10 @@ public class PersistenceConfig {
         dataSource.setPassword(password);
         return dataSource;
     }
+
     @Bean
-    public PlatformTransactionManager transactionManager(
-            EntityManagerFactory emf){
+    @Autowired
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
         return transactionManager;
@@ -68,8 +70,7 @@ public class PersistenceConfig {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
-    @Bean
-    public Properties persistenceProperties() {
+    private Properties persistenceProperties() {
         try {
             return PropertiesLoaderUtils.loadProperties(new ClassPathResource("persistence.properties"));
         } catch (IOException e) {
@@ -81,4 +82,5 @@ public class PersistenceConfig {
     public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());
     }
+
 }

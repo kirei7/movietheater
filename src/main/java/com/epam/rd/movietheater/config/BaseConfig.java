@@ -31,6 +31,10 @@ public class BaseConfig {
     private UserService userService;
     @Autowired
     private EventService eventService;
+    @Autowired
+    private BookingFacade bookingFacade;
+    @Autowired
+    private AuditoriumService auditoriumService;
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -41,19 +45,12 @@ public class BaseConfig {
     public BatchUploader batchUploader() {
         return new JsonBatchUploader(entityServices());
     }
-
     private Map<Class, IdentifiableEntityService> entityServices() {
         Map<Class, IdentifiableEntityService> map = new HashMap<>();
         map.put(User.class, userService);
         map.put(Event.class, eventService);
         return map;
     }
-
-
-    @Autowired
-    private BookingFacade bookingFacade;
-    @Autowired
-    private AuditoriumService auditoriumService;
 
     @EventListener({ContextRefreshedEvent.class})
     public void init() {

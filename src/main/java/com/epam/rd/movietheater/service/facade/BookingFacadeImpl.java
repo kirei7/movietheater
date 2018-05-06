@@ -10,6 +10,8 @@ import com.epam.rd.movietheater.service.user.UserService;
 import com.epam.rd.movietheater.service.useraccount.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,6 +33,7 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     @Override
+    @Transactional
     public List<Ticket> createTickets(Long eventId, User user, long[] seats) {
         return bookingService.createTicketsForEvent(
                 eventService.getById(eventId).orElseThrow(EventNotFoundException::new),
@@ -40,6 +43,7 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public List<Ticket> buyTickets(Long eventId, User user, long[] seats) {
         List<Ticket> tickets = createTickets(eventId, user, seats);
         conductPayment(tickets, user);
@@ -69,6 +73,7 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void replenishAccount(User user, Long amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount for replenish can't be less than or equal to zero");
