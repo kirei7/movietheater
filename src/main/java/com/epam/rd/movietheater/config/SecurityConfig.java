@@ -42,14 +42,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/events/*/tickets", "/test").hasAuthority(UserRole.BOOKING_MANAGER.toString())
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
+
+                .formLogin().loginPage("/login").permitAll()
                 .and()
+
                 .logout()
                 .permitAll()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout");
+                .logoutSuccessUrl("/login?logout")
+                .and()
+
+                .rememberMe().key("j$F78p1M_kl0_").tokenValiditySeconds(86400);
     }
 
     @Override
