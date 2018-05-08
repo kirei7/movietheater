@@ -6,6 +6,7 @@ import com.epam.rd.movietheater.model.entity.User;
 import com.epam.rd.movietheater.model.entity.UserAccount;
 import com.epam.rd.movietheater.service.booking.BookingService;
 import com.epam.rd.movietheater.service.event.EventService;
+import com.epam.rd.movietheater.service.payment.PaymentService;
 import com.epam.rd.movietheater.service.user.UserService;
 import com.epam.rd.movietheater.service.useraccount.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,12 @@ public class BookingFacadeImpl implements BookingFacade {
 
     private BookingService bookingService;
     private EventService eventService;
-    private UserService userService;
-    private UserAccountService userAccountService;
+    private PaymentService paymentService;
 
     @Autowired
     public BookingFacadeImpl(BookingService bookingService, EventService eventService, UserService userService, UserAccountService userAccountService) {
         this.bookingService = bookingService;
         this.eventService = eventService;
-        this.userService = userService;
-        this.userAccountService = userAccountService;
     }
 
     @Override
