@@ -9,9 +9,16 @@
     <script th:src="@{/static/js/jquery-3.3.1.min.js}" src="../static/js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<!--<div th:replace="fragments/header :: header">
-    ...
-</div>-->
+<div class="fixed-top">
+    <ul sec:authorize="!isAuthenticated()" class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="#">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Register</a>
+        </li>
+    </ul>
+</div>
 <div class="container card bg-light mt-5 py-5">
     <div layout:fragment="content">
         <h1>Static content for prototyping purposes only</h1>

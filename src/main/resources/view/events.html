@@ -8,7 +8,11 @@
     <h1>Events</h1>
     <div class="row">
         <div class="col-12" th:each="event : ${events}">
-            <p th:text="|id: ${event.id}; ${event}|"></p>
+            <a sec:authorize="!isAuthenticated()" th:href="|/events/${event.id}|">
+                <p th:text="|${event.airDate} - ${event.name}, rating: ${event.rating}|"></p>
+            </a>
+            <p sec:authorize="isAuthenticated()"
+               th:text="|${event.airDate} - ${event.name}, rating: ${event.rating}|"></p>
         </div>
     </div>
 </div>
