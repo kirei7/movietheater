@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import java.math.BigDecimal;
 
 @Entity
 @Getter
@@ -18,5 +19,5 @@ public class UserAccount extends IdentifiableEntity {
     /**
      * Amount of money on account in mills (1/1000 of unit)
      */
-    private Long amount = 0L;
+    private BigDecimal amount = BigDecimal.ZERO;
 }

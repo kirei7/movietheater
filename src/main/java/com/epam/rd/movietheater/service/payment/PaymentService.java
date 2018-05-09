@@ -6,5 +6,6 @@ import java.math.BigDecimal;
 
 public interface PaymentService {
     void withdrawFromAccount(UserAccount userAccount, BigDecimal amount);
-    void refillAccount(UserAccount userAccount, BigDecimal amount);
+
+    void refillAccount(UserAccount userAccount, Long amount);
 }

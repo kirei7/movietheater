@@ -3,7 +3,6 @@ package com.epam.rd.movietheater.service.facade;
 import com.epam.rd.movietheater.exception.EventNotFoundException;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.model.entity.User;
-import com.epam.rd.movietheater.model.entity.UserAccount;
 import com.epam.rd.movietheater.service.booking.BookingService;
 import com.epam.rd.movietheater.service.event.EventService;
 import com.epam.rd.movietheater.service.payment.PaymentService;
@@ -50,20 +49,16 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     private void conductPayment(List<Ticket> tickets, User user) {
-        Long totalSum = calculateTotalSum(tickets);
-        withdrawFromAccount(user.getAccount(), totalSum);
+        BigDecimal totalSum = calculateTotalSum(tickets);
+        paymentService.withdrawFromAccount(user.getAccount(), totalSum);
     }
 
-    private void withdrawFromAccount(UserAccount account, Long totalSum) {
-        //TODO: iplement method
-    }
-
-    private Long calculateTotalSum(List<Ticket> tickets) {
+    private BigDecimal calculateTotalSum(List<Ticket> tickets) {
         return tickets.stream().map(ticket -> {
             BigDecimal price = ticket.getPrice();
             BigDecimal discountAmount = calculateDiscountAmount(price, ticket.getDiscount().getAmount());
-            return price = price.subtract(discountAmount);
-        }).reduce(new BigDecimal(0), BigDecimal::add).longValue();
+            return price.subtract(discountAmount);
+        }).reduce(new BigDecimal(0), BigDecimal::add);
     }
 
     private BigDecimal calculateDiscountAmount(BigDecimal basePrice, int amount) {
@@ -73,13 +68,6 @@ public class BookingFacadeImpl implements BookingFacade {
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void replenishAccount(User user, Long amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount for replenish can't be less than or equal to zero");
-        }
-        UserAccount account = user.getAccount();
-        Long sum = account.getAmount() + amount;
-        if (sum < 0)
-            throw new IllegalArgumentException("Too big amount was given: " + amount);
-        account.setAmount(sum);
+
     }
 }
