@@ -43,7 +43,7 @@ public class EventController {
     @GetMapping(value = "/{eventId}")
     public String findOne(@PathVariable Long eventId, Model model) {
         model.addAttribute("event", eventService.getById(eventId).orElseThrow(EventNotFoundException::new));
-        return "events";
+        return "event";
     }
 
 

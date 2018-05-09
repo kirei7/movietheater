@@ -7,8 +7,6 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Entity
 @Getter @Setter
@@ -27,7 +25,7 @@ public class User extends IdentifiableEntity {
     @JoinTable(name = "roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "roles", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Set<UserRole> roles = Stream.of(UserRole.REGISTERED_USER).collect(Collectors.toSet());
+    private Set<UserRole> roles = new HashSet<>();
     @Column(unique = true, nullable = false)
     private String nickName;
     @Column(nullable = false)

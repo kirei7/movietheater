@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class UserAccount extends IdentifiableEntity {
     @MapsId
     @OneToOne(cascade = CascadeType.MERGE)
-    private User owner;
+    private User user;
     /**
      * Amount of money on account in mills (1/1000 of unit)
      */

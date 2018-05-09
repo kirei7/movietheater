@@ -8,7 +8,7 @@ public class FrontController {
 
     @RequestMapping
     public String indexPage() {
-        return "index";
+        return "events";
     }
 
     @RequestMapping("login")
