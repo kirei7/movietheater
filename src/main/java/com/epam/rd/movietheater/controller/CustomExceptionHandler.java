@@ -11,6 +11,7 @@ public class CustomExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public ModelAndView testErrorHandler(Exception ex, Model model) {
         ModelAndView mav = new ModelAndView();
+        ex.printStackTrace();
         mav.addObject("exceptionMessage", ex.getMessage());
         mav.setViewName("error");
         return mav;

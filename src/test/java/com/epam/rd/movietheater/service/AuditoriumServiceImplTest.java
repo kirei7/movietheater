@@ -1,5 +1,6 @@
 package com.epam.rd.movietheater.service;
 
+import com.epam.rd.movietheater.dao.impl.jpa.repository.AuditoriumRepository;
 import com.epam.rd.movietheater.model.entity.Auditorium;
 import com.epam.rd.movietheater.service.auditorium.AuditoriumServiceImpl;
 import com.epam.rd.movietheater.service.auditorium.source.AuditoriumSource;
@@ -25,8 +26,10 @@ public class AuditoriumServiceImplTest {
                 new Auditorium("Blue", 18)
         );
         AuditoriumSource auditoriumSource = Mockito.mock(AuditoriumSource.class);
+        AuditoriumRepository auditoriumRepository = Mockito.mock(AuditoriumRepository.class);
         when(auditoriumSource.getAuditoriums()).thenReturn(new HashSet<>(auditoriums));
-        service = new AuditoriumServiceImpl(auditoriumSource.getAuditoriums());
+        when(auditoriumRepository.findAll()).thenReturn(auditoriums);
+        service = new AuditoriumServiceImpl(auditoriumSource.getAuditoriums(), auditoriumRepository);
     }
 
     @Test

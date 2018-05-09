@@ -21,8 +21,10 @@ public class Event extends IdentifiableEntity {
     private double basePrice;
     @Enumerated(EnumType.STRING)
     private Rating rating;
+    @ManyToOne
+    @JoinColumn(name = "auditorium_id")
     private Auditorium auditorium;
-    @OneToMany(mappedBy = "event", cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.MERGE)
     private Set<Ticket> reservedTickets = new HashSet<>();
 
     public Event(String name, LocalDateTime airDate, double basePrice, Event.Rating rating, Auditorium auditorium) {

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class BookingHelper {
@@ -38,11 +39,13 @@ public class BookingHelper {
     }
 
     public void bookTicket(Ticket ticket) {
+        Event event = ticket.getEvent();
+        event.addReservedTicket(ticket);
         ticketDao.save(ticket);
     }
 
     public List<Ticket> getPurchasedTicketsForEvent(Event event) {
-        return ticketDao.findByEvent(event);
+        return ticketDao.findByEvent(event).stream().distinct().collect(Collectors.toList());
     }
 
 }

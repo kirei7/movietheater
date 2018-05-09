@@ -6,8 +6,14 @@
 <body>
 <div layout:fragment="content">
     <div class="row">
-        <div class="col">
-            <p th:text="|Event page for: ${event.name}|"></p>
+        <div class="col-12">
+            <h3 th:text="|Event page for: ${event.name}|"></h3>
+            <p>Available seaats:</p>
+            <form>
+                <div th:each="ticket,iter : ${event.reservedTickets}">
+                    <input type="text" name="sections[0]" id="sections0"/>
+                </div>
+            </form>
         </div>
     </div>
 </div>

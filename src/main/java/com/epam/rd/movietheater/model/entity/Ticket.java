@@ -23,7 +23,6 @@ public class Ticket extends IdentifiableEntity {
      */
     private BigDecimal price;
     @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
     private Discount discount;
 
     public Ticket(Event event, User user, long seat) {

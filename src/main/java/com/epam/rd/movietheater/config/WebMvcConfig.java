@@ -25,6 +25,10 @@ public class WebMvcConfig implements WebMvcConfigurer, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
+    public WebMvcConfig() {
+        System.out.println("wbv");
+    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry

@@ -1,6 +1,7 @@
 package com.epam.rd.movietheater.controller;
 
 import com.epam.rd.movietheater.exception.EventNotFoundException;
+import com.epam.rd.movietheater.model.entity.Auditorium;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.service.booking.BookingService;
 import com.epam.rd.movietheater.service.event.EventService;
@@ -42,7 +43,10 @@ public class EventController {
 
     @GetMapping(value = "/{eventId}")
     public String findOne(@PathVariable Long eventId, Model model) {
-        model.addAttribute("event", eventService.getById(eventId).orElseThrow(EventNotFoundException::new));
+        Event event = eventService.getById(eventId).orElseThrow(EventNotFoundException::new);
+        model.addAttribute("event", event);
+        Auditorium auditorium = event.getAuditorium();
+        model.addAttribute("availableSeats", event.getReservedTickets());
         return "event";
     }
 

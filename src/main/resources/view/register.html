@@ -1,0 +1,27 @@
+<!doctype html>
+<html layout:decorate="~{_layout}">
+<head>
+    <title>title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col">
+            <form action="#" method="post" th:action="@{/users}" th:object="${user}">
+
+                <label for="nickName">Nickname:</label>
+                <input type="text" th:field="*{nickName}"/>
+
+                <label for="password">Password:</label>
+                <input type="password" th:field="*{password}"/>
+
+                <label for="email">Email:</label>
+                <input type="email" th:field="*{email}"/>
+
+                <input type="submit" value="Register me"/>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

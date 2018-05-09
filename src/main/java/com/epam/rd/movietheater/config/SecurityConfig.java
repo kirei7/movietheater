@@ -4,6 +4,7 @@ import com.epam.rd.movietheater.security.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -31,9 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/events/*/tickets", "/test").hasAuthority(UserRole.BOOKING_MANAGER.toString())
+                .antMatchers("/", "/events", "/users/register").permitAll()
+                .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .antMatchers("/events/*/tickets", "/batch", "/batch/*").hasAuthority(UserRole.BOOKING_MANAGER.toString())
                 .anyRequest().authenticated()
                 .and()
 
