@@ -2,7 +2,7 @@ package com.epam.rd.movietheater.controller;
 
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.User;
-import com.epam.rd.movietheater.util.batchupload.BatchUploader;
+import com.epam.rd.movietheater.util.batch.upload.BatchUploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

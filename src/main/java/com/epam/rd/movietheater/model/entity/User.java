@@ -47,6 +47,9 @@ public class User extends IdentifiableEntity {
 
     public User(User other) {
         this.id = other.id;
+        this.nickName = other.nickName;
+        this.password = other.password;
+        this.account = account;
         this.firstName = other.firstName;
         this.lastName = other.lastName;
         this.email = other.email;

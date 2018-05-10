@@ -18,7 +18,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.PostConstruct;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
@@ -83,10 +82,4 @@ public class CountAspectTest {
         assertEquals(tickets.size(), countAspect.getNumberOfBookedTickets(event));
     }
 
-    @Test
-    public void testCountDiscountsForUser() {
-        User testUser = new User(user);
-        testUser.setBirthday(LocalDate.now().minusYears(20));
-        List<Ticket> tickets = bookingService.createTicketsForEvent(events.get(0), testUser, LongStream.range(0,11).toArray());
-    }
 }

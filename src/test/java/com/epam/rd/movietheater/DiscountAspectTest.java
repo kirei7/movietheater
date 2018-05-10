@@ -8,7 +8,6 @@ import com.epam.rd.movietheater.service.booking.BookingService;
 import com.epam.rd.movietheater.service.discount.strategy.BirthdayDiscountStrategy;
 import com.epam.rd.movietheater.service.discount.strategy.PeriodicDiscountStrategy;
 import com.epam.rd.movietheater.service.user.UserService;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +43,10 @@ public class DiscountAspectTest {
     public void testDiscountCounter() {
         user.setId(1L);
         User user2 = new User(user);
-        user2.setFirstName("Second");
+        user2.setNickName("Second");
         user2.setId(2L);
         User user3 = new User(user);
-        user3.setFirstName("Third");
+        user3.setNickName("Third");
         user3.setId(3L);
 
         userService.save(user);

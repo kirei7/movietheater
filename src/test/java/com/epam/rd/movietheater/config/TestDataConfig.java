@@ -44,7 +44,7 @@ public class TestDataConfig {
     }
     @Bean
     public User sampleUser() {
-        return new User("Vlad", "Sereda", "vladyslav_sereda1@epam.com", LocalDate.now().minusYears(24));
+        return new User("Vlad", "1111", "vladyslav_sereda1@epam.com", LocalDate.now().minusYears(24));
     }
 
     @Autowired

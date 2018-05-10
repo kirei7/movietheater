@@ -2,10 +2,12 @@ package com.epam.rd.movietheater.service.facade;
 
 import com.epam.rd.movietheater.exception.UserNotFoundException;
 import com.epam.rd.movietheater.exception.UserRegistrationException;
+import com.epam.rd.movietheater.model.dto.UserDto;
 import com.epam.rd.movietheater.model.entity.User;
 import com.epam.rd.movietheater.model.entity.UserAccount;
 import com.epam.rd.movietheater.security.UserRole;
 import com.epam.rd.movietheater.service.user.UserService;
+import com.epam.rd.movietheater.util.mapper.UserDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,26 +20,29 @@ public class UserFacadeImpl implements UserFacade {
 
     private UserService userService;
     private PasswordEncoder passwordEncoder;
+    private UserDtoMapper dtoMapper;
 
     @Autowired
-    public UserFacadeImpl(UserService userService, PasswordEncoder passwordEncoder) {
+    public UserFacadeImpl(UserService userService, PasswordEncoder passwordEncoder, UserDtoMapper dtoMapper) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.dtoMapper = dtoMapper;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public User registerUser(User user) {
-        checkUserEntity(user);
+    public User registerUser(UserDto userDto) {
+        checkUserDto(userDto);
         UserAccount account = new UserAccount();
+        User user = dtoMapper.toEntity(userDto);
         account.setUser(user);
         user.setAccount(account);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.addRole(UserRole.REGISTERED_USER);
         return userService.save(user);
     }
 
-    private void checkUserEntity(User user) {
+    private void checkUserDto(UserDto user) {
         user.setNickName(user.getNickName().trim());
         user.setPassword(user.getPassword().trim());
         if (StringUtils.isEmpty(user.getNickName()))

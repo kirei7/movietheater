@@ -1,6 +1,8 @@
 package com.epam.rd.movietheater.config;
 
 import com.epam.rd.movietheater.exception.ManagerInfoFileNotPresentException;
+import com.epam.rd.movietheater.model.dto.EventDto;
+import com.epam.rd.movietheater.model.dto.UserDto;
 import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.User;
 import com.epam.rd.movietheater.security.UserRole;
@@ -10,8 +12,9 @@ import com.epam.rd.movietheater.service.event.EventService;
 import com.epam.rd.movietheater.service.facade.BookingFacade;
 import com.epam.rd.movietheater.service.facade.UserFacade;
 import com.epam.rd.movietheater.service.user.UserService;
-import com.epam.rd.movietheater.util.batchupload.BatchUploader;
-import com.epam.rd.movietheater.util.batchupload.JsonBatchUploader;
+import com.epam.rd.movietheater.util.batch.update.BatchUpdater;
+import com.epam.rd.movietheater.util.batch.upload.BatchUploader;
+import com.epam.rd.movietheater.util.batch.upload.JsonBatchUploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -60,17 +63,17 @@ public class BaseConfig {
         return map;
     }
 
-    /*@EventListener({ContextRefreshedEvent.class})
-    public void init() {
-        Event event = new Event("Film one",
-                LocalDateTime.now().plusHours(2),
-                15.00,
-                Event.Rating.HIGH,
-                auditoriumService.getAll().get(0)
-        );
-        eventService.save(event);
-        bookingFacade.buyTickets(event.getId(), userService.getUserByNickName("user"), new long[]{2, 3, 4, 5});
-    }*/
+    @Autowired
+    private BatchUpdater<Event, EventDto> eventBatchUpdater;
+    @Autowired
+    private BatchUpdater<User, UserDto> userBatchUpdater;
+    @Bean
+    public Map<Class, BatchUpdater> batchUpdaters() {
+        Map<Class, BatchUpdater> updaters = new HashMap<>();
+        updaters.put(EventDto.class, eventBatchUpdater);
+        updaters.put(UserDto.class, userBatchUpdater);
+        return updaters;
+    }
 
     @PostConstruct
     protected void registerManager() {

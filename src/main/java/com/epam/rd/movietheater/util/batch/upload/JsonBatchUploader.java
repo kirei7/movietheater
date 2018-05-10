@@ -1,11 +1,10 @@
-package com.epam.rd.movietheater.util.batchupload;
+package com.epam.rd.movietheater.util.batch.upload;
 
 import com.epam.rd.movietheater.exception.IllegalFileFormatException;
-import com.epam.rd.movietheater.model.entity.IdentifiableEntity;
-import com.epam.rd.movietheater.service.IdentifiableEntityService;
+import com.epam.rd.movietheater.model.dto.Dto;
+import com.epam.rd.movietheater.util.batch.update.BatchUpdater;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -16,20 +15,14 @@ import java.util.Map;
 public class JsonBatchUploader implements BatchUploader {
 
     private Gson gson = new Gson();
-    private Map<Class, IdentifiableEntityService> services;
-
-    @Autowired
-    public JsonBatchUploader(Map<Class, IdentifiableEntityService> services) {
-        this.services = services;
-    }
+    private Map<Class, BatchUpdater> updaters;
 
     @Override
-    public <T extends IdentifiableEntity> List<T> performUpload(MultipartFile file, Class<T> targetType) {
+    public <T extends Dto> List<T> performUpload(MultipartFile file, Class<T> targetType) {
         checkFile(file);
         List<T> parsed = parseFile(file, targetType);
-        IdentifiableEntityService service = services.get(targetType);
-        parsed.forEach(service::save);
-        return parsed;
+        BatchUpdater updater = updaters.get(targetType);
+        return updater.updateWithData(parsed);
     }
 
     private void checkFile(MultipartFile file) {
@@ -42,7 +35,7 @@ public class JsonBatchUploader implements BatchUploader {
             throw new IllegalFileFormatException(fileFormat, "json");
     }
 
-    private <T extends IdentifiableEntity> List<T> parseFile(MultipartFile file, Class<T> targetType) {
+    private <T> List<T> parseFile(MultipartFile file, Class<T> targetType) {
         try {
             String content = new String(file.getBytes());
             Type collectionType = TypeToken.getParameterized(List.class, targetType).getType();
