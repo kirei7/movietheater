@@ -1,6 +1,7 @@
 package com.epam.rd.movietheater.controller;
 
 import com.epam.rd.movietheater.exception.UserNotFoundException;
+import com.epam.rd.movietheater.model.dto.UserDto;
 import com.epam.rd.movietheater.model.entity.User;
 import com.epam.rd.movietheater.service.facade.UserFacade;
 import com.epam.rd.movietheater.service.user.UserService;
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @PostMapping
-    public String registerUser(User user, HttpServletRequest request) {
+    public String registerUser(UserDto user, HttpServletRequest request) {
         String password = user.getPassword();
         User registered = userFacade.registerUser(user);
         try {

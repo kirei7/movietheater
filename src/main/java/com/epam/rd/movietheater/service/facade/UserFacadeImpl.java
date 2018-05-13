@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Arrays;
+
 @Service
 public class UserFacadeImpl implements UserFacade {
 
@@ -29,9 +31,14 @@ public class UserFacadeImpl implements UserFacade {
         this.dtoMapper = dtoMapper;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public User registerUser(UserDto userDto) {
+        return registerUser(userDto, UserRole.REGISTERED_USER);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public User registerUser(UserDto userDto, UserRole... roles) {
         checkUserDto(userDto);
         UserAccount account = new UserAccount();
         User user = dtoMapper.toEntity(userDto);
@@ -39,6 +46,7 @@ public class UserFacadeImpl implements UserFacade {
         user.setAccount(account);
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.addRole(UserRole.REGISTERED_USER);
+        Arrays.stream(roles).forEach(user::addRole);
         return userService.save(user);
     }
 

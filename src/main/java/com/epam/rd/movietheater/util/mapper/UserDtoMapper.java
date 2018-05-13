@@ -2,7 +2,9 @@ package com.epam.rd.movietheater.util.mapper;
 
 import com.epam.rd.movietheater.model.dto.UserDto;
 import com.epam.rd.movietheater.model.entity.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserDtoMapper implements EntityMapper<User, UserDto> {
 
     @Override

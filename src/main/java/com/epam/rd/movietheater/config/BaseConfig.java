@@ -54,7 +54,7 @@ public class BaseConfig {
 
     @Bean
     public BatchUploader batchUploader() {
-        return new JsonBatchUploader(entityServices());
+        return new JsonBatchUploader(batchUpdaters());
     }
     private Map<Class, IdentifiableEntityService> entityServices() {
         Map<Class, IdentifiableEntityService> map = new HashMap<>();
@@ -80,12 +80,10 @@ public class BaseConfig {
         Resource resource = new ClassPathResource("bookingManager.properties");
         try {
             Properties props = PropertiesLoaderUtils.loadProperties(resource);
-            User manager = new User(
-                    props.getProperty("manager.nickName"),
-                    props.getProperty("manager.password")
-            );
-            manager.addRole(UserRole.BOOKING_MANAGER);
-            userFacade.registerUser(manager);
+            UserDto manager = new UserDto();
+            manager.setNickName(props.getProperty("manager.nickName"));
+            manager.setPassword(props.getProperty("manager.password"));
+            userFacade.registerUser(manager, UserRole.BOOKING_MANAGER);
         } catch (IOException ex) {
             throw new ManagerInfoFileNotPresentException();
         }

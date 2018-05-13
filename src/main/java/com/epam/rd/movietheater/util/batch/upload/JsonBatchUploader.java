@@ -1,10 +1,11 @@
 package com.epam.rd.movietheater.util.batch.upload;
 
 import com.epam.rd.movietheater.exception.IllegalFileFormatException;
-import com.epam.rd.movietheater.model.dto.Dto;
+import com.epam.rd.movietheater.model.entity.IdentifiableEntity;
 import com.epam.rd.movietheater.util.batch.update.BatchUpdater;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -17,8 +18,13 @@ public class JsonBatchUploader implements BatchUploader {
     private Gson gson = new Gson();
     private Map<Class, BatchUpdater> updaters;
 
+    @Autowired
+    public JsonBatchUploader(Map<Class, BatchUpdater> updaters) {
+        this.updaters = updaters;
+    }
+
     @Override
-    public <T extends Dto> List<T> performUpload(MultipartFile file, Class<T> targetType) {
+    public <T extends IdentifiableEntity> List<T> performUpload(MultipartFile file, Class<T> targetType) {
         checkFile(file);
         List<T> parsed = parseFile(file, targetType);
         BatchUpdater updater = updaters.get(targetType);
