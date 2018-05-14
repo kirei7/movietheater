@@ -40,10 +40,10 @@ public class AuditoriumServiceImplTest {
     @Test
     public void findByNameFindsAuditoriumByName() {
         Auditorium target = service.getAll().get(0);
-        Auditorium finded = service.getByName(target.getName());
+        Auditorium found = service.getByName(target.getName());
 
-        assertEquals(target.getName(), finded.getName());
-        assertEquals(target.getNumberOfSeats(), finded.getNumberOfSeats());
+        assertEquals(target.getName(), found.getName());
+        assertEquals(target.getNumberOfSeats(), found.getNumberOfSeats());
     }
 
 }

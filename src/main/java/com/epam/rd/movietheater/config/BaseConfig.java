@@ -70,8 +70,8 @@ public class BaseConfig {
     @Bean
     public Map<Class, BatchUpdater> batchUpdaters() {
         Map<Class, BatchUpdater> updaters = new HashMap<>();
-        updaters.put(EventDto.class, eventBatchUpdater);
-        updaters.put(UserDto.class, userBatchUpdater);
+        updaters.put(Event.class, eventBatchUpdater);
+        updaters.put(User.class, userBatchUpdater);
         return updaters;
     }
 

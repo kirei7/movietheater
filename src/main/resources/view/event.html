@@ -8,10 +8,11 @@
     <div class="row">
         <div class="col-12">
             <h3 th:text="|Event page for: ${event.name}|"></h3>
-            <p>Available seaats:</p>
+            <p>Available seats:</p>
+            <p th:text="${availableSeats}"></p>
             <form>
-                <div th:each="ticket,iter : ${event.reservedTickets}">
-                    <input type="text" name="sections[0]" id="sections0"/>
+                <div th:each="ticket,iter : ${availableSeats}">
+                    <input type="checkbox" th:name="|seats[${iter}]|" th:id="|sections${ticket}|" th:value="${ticket}"/>
                 </div>
             </form>
         </div>

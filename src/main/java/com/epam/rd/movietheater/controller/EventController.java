@@ -1,8 +1,8 @@
 package com.epam.rd.movietheater.controller;
 
 import com.epam.rd.movietheater.exception.EventNotFoundException;
-import com.epam.rd.movietheater.model.entity.Auditorium;
 import com.epam.rd.movietheater.model.entity.Event;
+import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.service.booking.BookingService;
 import com.epam.rd.movietheater.service.event.EventService;
 import com.epam.rd.movietheater.util.pdf.PdfGenerator;
@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toSet;
 
 @Controller
 @RequestMapping("/events")
@@ -44,9 +48,17 @@ public class EventController {
     @GetMapping(value = "/{eventId}")
     public String findOne(@PathVariable Long eventId, Model model) {
         Event event = eventService.getById(eventId).orElseThrow(EventNotFoundException::new);
-        model.addAttribute("event", event);
-        Auditorium auditorium = event.getAuditorium();
-        model.addAttribute("availableSeats", event.getReservedTickets());
+        Stream<Long> availableTickets = LongStream.rangeClosed(0,event.getAuditorium().getNumberOfSeats()).boxed();
+        model.addAttribute(
+                "event",
+                event
+        );
+        model.addAttribute(
+                "availableTickets",
+                availableTickets.filter(s ->
+                        event.getReservedTickets().stream().mapToLong(Ticket::getSeat).boxed().collect(toSet()).contains(s)
+                )
+        );
         return "event";
     }
 
@@ -54,13 +66,16 @@ public class EventController {
     @GetMapping(value = "/{eventId}/tickets", headers = "Accept=text/html")
     public String getTicketsForEventView(@PathVariable Long eventId, Model model) {
         Event event = eventService.getById(eventId).orElseThrow(EventNotFoundException::new);
+        Stream<Long> availableTickets = LongStream.rangeClosed(0,event.getAuditorium().getNumberOfSeats()).boxed();
         model.addAttribute(
                 "event",
                 event
         );
         model.addAttribute(
-                "tickets",
-                bookingService.getPurchasedTicketsForEvent(event)
+                "availableTickets",
+                availableTickets.filter(s ->
+                        event.getReservedTickets().stream().mapToLong(Ticket::getSeat).boxed().collect(toSet()).contains(s)
+                )
         );
         return "bookedForEvent";
     }
