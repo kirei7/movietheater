@@ -1,6 +1,7 @@
 package com.epam.rd.movietheater.service.facade;
 
 import com.epam.rd.movietheater.exception.EventNotFoundException;
+import com.epam.rd.movietheater.model.Order;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.model.entity.User;
 import com.epam.rd.movietheater.service.booking.BookingService;
@@ -41,16 +42,18 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public List<Ticket> buyTickets(Long eventId, User user, long[] seats) {
+    public Order buyTickets(Long eventId, User user, long[] seats) {
         List<Ticket> tickets = createTickets(eventId, user, seats);
-        conductPayment(tickets, user);
+        BigDecimal totalSum = conductPayment(tickets, user);
         bookingService.bookTickets(tickets);
-        return tickets;
+        totalSum.setScale(2);
+        return new Order(tickets, totalSum.toString());
     }
 
-    private void conductPayment(List<Ticket> tickets, User user) {
+    private BigDecimal conductPayment(List<Ticket> tickets, User user) {
         BigDecimal totalSum = calculateTotalSum(tickets);
         paymentService.withdrawFromAccount(user.getAccount(), totalSum);
+        return totalSum;
     }
 
     private BigDecimal calculateTotalSum(List<Ticket> tickets) {
