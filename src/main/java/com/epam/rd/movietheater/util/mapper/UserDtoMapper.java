@@ -17,4 +17,15 @@ public class UserDtoMapper implements EntityMapper<User, UserDto> {
         user.setEmail(userDto.getEmail());
         return user;
     }
+
+    @Override
+    public UserDto toDto(User entity) {
+        UserDto dto = new UserDto();
+        dto.setNickName(entity.getNickName());
+        dto.setFirstName(entity.getFirstName());
+        dto.setLastName(entity.getLastName());
+        dto.setBirthday(entity.getBirthday());
+        dto.setEmail(entity.getEmail());
+        return dto;
+    }
 }

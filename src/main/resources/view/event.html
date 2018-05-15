@@ -7,7 +7,7 @@
 <div layout:fragment="content">
     <div class="row">
         <div class="col-12">
-            <h3 th:text="|Event page for: ${event.name}|"></h3>
+            <h3 th:text="|Event page for: ${event.name}, ${event.auditorium.name}|"></h3>
             <p>Available seats:</p>
             <div class="seats-container mb-2"
                  th:attr="data-event=${event.id}, data-url=${#httpServletRequest.requestURI}">

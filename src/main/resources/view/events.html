@@ -5,16 +5,41 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h1>Events</h1>
-    <div class="row">
-        <div class="col-12" th:each="event : ${events}">
-            <a sec:authorize="isAuthenticated()" th:href="|/events/${event.id}|">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <h1>Events</h1>
+        </div>
+        <div class="col-8" th:each="event : ${events}" th:id="|event${event.id}|">
+            <a sec:authorize="isAuthenticated()" th:href="|/events/${event.id}|" class="float-left">
                 <p th:text="|${event.airDate} - ${event.name}, rating: ${event.rating}, auditorium: ${event.auditorium.name}|"></p>
             </a>
             <p sec:authorize="!isAuthenticated()"
                th:text="|${event.airDate} - ${event.name}, rating: ${event.rating}, auditorium: ${event.auditorium.name}|"></p>
+            <button sec:authorize="hasAuthority('BOOKING_MANAGER')"
+                    th:attr="data-id=${event.id}"
+                    class="event-remove btn btn-danger float-right">Remove
+            </button>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Are You sure You want to delete event?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="delete-cancel btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="delete-do btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/removeEvent.js"></script>
 </div>
 </body>
 </html>

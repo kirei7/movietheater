@@ -13,8 +13,6 @@ import com.epam.rd.movietheater.service.facade.BookingFacade;
 import com.epam.rd.movietheater.service.facade.UserFacade;
 import com.epam.rd.movietheater.service.user.UserService;
 import com.epam.rd.movietheater.util.batch.update.BatchUpdater;
-import com.epam.rd.movietheater.util.batch.upload.BatchUploader;
-import com.epam.rd.movietheater.util.batch.upload.JsonBatchUploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,10 +50,6 @@ public class BaseConfig {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-    @Bean
-    public BatchUploader batchUploader() {
-        return new JsonBatchUploader(batchUpdaters());
-    }
     private Map<Class, IdentifiableEntityService> entityServices() {
         Map<Class, IdentifiableEntityService> map = new HashMap<>();
         map.put(User.class, userService);

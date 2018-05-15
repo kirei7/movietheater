@@ -1,5 +1,7 @@
 package com.epam.rd.movietheater.model.entity;
 
+import com.epam.rd.movietheater.util.json.LocalDateTimeToStringConverter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Event extends IdentifiableEntity {
     private String name;
+    @JsonSerialize(using = LocalDateTimeToStringConverter.class)
     private LocalDateTime airDate;
     private double basePrice;
     @Enumerated(EnumType.STRING)

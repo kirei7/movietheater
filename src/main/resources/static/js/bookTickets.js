@@ -45,7 +45,7 @@ function sendPriceRequest() {
         return;
     $.ajax({
         url: "/booking/event/" + eventId + "/price",
-        type: 'Post',
+        type: 'POST',
         contentType: "application/json",
         dataType: "json",
         data: JSON.stringify(seatsData),

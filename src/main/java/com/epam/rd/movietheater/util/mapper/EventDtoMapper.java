@@ -16,6 +16,7 @@ public class EventDtoMapper implements EntityMapper<Event, EventDto> {
         this.auditoriumService = auditoriumService;
     }
 
+    @Override
     public Event toEntity(EventDto dto) {
         Event entity = new Event();
         entity.setName(dto.getName());
@@ -25,4 +26,16 @@ public class EventDtoMapper implements EntityMapper<Event, EventDto> {
         entity.setAuditorium(auditoriumService.getByName(dto.getAuditoriumName()));
         return entity;
     }
+
+    @Override
+    public EventDto toDto(Event event) {
+        EventDto dto = new EventDto();
+        dto.setName(dto.getName());
+        dto.setAirDate(dto.getAirDate());
+        dto.setBasePrice(dto.getBasePrice());
+        dto.setRating(event.getRating().toString());
+        dto.setAuditoriumName(event.getAuditorium().getName());
+        return dto;
+    }
+
 }

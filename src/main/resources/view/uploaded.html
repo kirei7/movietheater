@@ -9,8 +9,10 @@
         <div class="col-12 text-center">
             <h1>Uploaded data:</h1>
         </div>
-        <div class="col-12" th:each="item : ${uploadedList}">
-            <p th:text="${item}"></p>
+        <div class="col-12" th:each="event : ${uploadedList}">
+            <a th:href="|/events/${event.id}|">
+                <p th:text="|${event.airDate} - ${event.name}, rating: ${event.rating}, auditorium: ${event.auditorium.name}|"></p>
+            </a>
         </div>
     </div>
 </div>

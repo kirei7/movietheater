@@ -10,6 +10,8 @@ import com.epam.rd.movietheater.util.batch.update.BatchUpdater;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -17,14 +19,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class JsonBatchUploader implements BatchUploader {
 
-    private ObjectMapper serializer = new ObjectMapper();
+    private ObjectMapper serializer;
     private Map<Class, BatchUpdater> updaters;
     private Map<Class, Class> dtoToEntityMapping;
 
     @Autowired
-    public JsonBatchUploader(Map<Class, BatchUpdater> updaters) {
+    public JsonBatchUploader(@Value("#{ObjectMapperProvider.getObjectMapper()}") ObjectMapper serializer, Map<Class, BatchUpdater> updaters) {
+        this.serializer = serializer;
         this.updaters = updaters;
         dtoToEntityMapping = new HashMap<>();
         dtoToEntityMapping.put(Event.class, EventDto.class);

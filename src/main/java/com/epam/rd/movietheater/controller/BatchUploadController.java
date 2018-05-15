@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/batch")
 public class BatchUploadController {
@@ -34,9 +36,10 @@ public class BatchUploadController {
 
     @RequestMapping(value = "/events", method = RequestMethod.POST)
     public String uploadEvents(@RequestParam("file") MultipartFile file, Model model) {
+        List<Event> uploaded = batchUploader.performUpload(file, Event.class);
         model.addAttribute(
                 "uploadedList",
-                batchUploader.performUpload(file, Event.class)
+                uploaded
         );
         return "uploaded";
     }

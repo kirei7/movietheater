@@ -4,4 +4,6 @@ import com.epam.rd.movietheater.model.entity.IdentifiableEntity;
 
 public interface EntityMapper<T extends IdentifiableEntity, Dto> {
     T toEntity(Dto dto);
+
+    Dto toDto(T entity);
 }

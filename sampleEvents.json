@@ -1,8 +1,16 @@
 [
   {
-    "name": "event1",
+    "name": "Pulp fiction",
     "basePrice": 22.5,
     "rating": "HIGH",
-    "auditoriumName": "Blue room"
+    "auditoriumName": "Blue room",
+    "airDate": "2018-05-15 13:30"
+  },
+  {
+    "name": "Pulp fiction",
+    "basePrice": 22.5,
+    "rating": "HIGH",
+    "auditoriumName": "Red room",
+    "airDate": "2018-05-16 14:00"
   }
 ]

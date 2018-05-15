@@ -21,14 +21,17 @@ import static java.util.stream.Collectors.toSet;
 public class PropertyBasedAuditoriumSource implements AuditoriumSource {
 
     private Set<Auditorium> auditoriums;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper;
 
     @Override
     public Set<Auditorium> getAuditoriums() {
         return auditoriums;
     }
 
-    public PropertyBasedAuditoriumSource(@Value("${auditoriums.source}") String fileName) {
+    public PropertyBasedAuditoriumSource(
+            @Value("${auditoriums.source}") String fileName,
+            @Value("#{ObjectMapperProvider.getObjectMapper()}") ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
         Resource resource = new ClassPathResource(fileName);
         try {
             Properties props = PropertiesLoaderUtils.loadProperties(resource);
