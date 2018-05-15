@@ -3,8 +3,7 @@ package com.epam.rd.movietheater.service.auditorium.source;
 import com.epam.rd.movietheater.exception.AuditoriumSourceFileNotPresentException;
 import com.epam.rd.movietheater.exception.WrongAuditoriumSourceFileFormatException;
 import com.epam.rd.movietheater.model.entity.Auditorium;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -22,7 +21,7 @@ import static java.util.stream.Collectors.toSet;
 public class PropertyBasedAuditoriumSource implements AuditoriumSource {
 
     private Set<Auditorium> auditoriums;
-    private Gson gson = new GsonBuilder().create();
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public Set<Auditorium> getAuditoriums() {
@@ -48,7 +47,7 @@ public class PropertyBasedAuditoriumSource implements AuditoriumSource {
     private Auditorium mapFromEntry(Map.Entry<Object, Object> entry) {
         String name = ((String) entry.getKey()).replace('_', ' ');
         try {
-            Auditorium newAuditorium = gson.fromJson((String) entry.getValue(), Auditorium.class);
+            Auditorium newAuditorium = objectMapper.readValue((String) entry.getValue(), Auditorium.class);
             newAuditorium.setName(name);
             return newAuditorium;
         } catch (Exception ex) {

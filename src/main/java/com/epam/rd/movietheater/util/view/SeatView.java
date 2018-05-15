@@ -11,4 +11,5 @@ import lombok.Setter;
 public class SeatView {
     private Long number;
     private boolean booked;
+    private boolean vip;
 }

@@ -9,12 +9,12 @@ import java.math.BigDecimal;
 @ToString
 @Getter @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"event", "seat"}, callSuper = false)
+@EqualsAndHashCode(of = {"seat"}, callSuper = false)
 public class Ticket extends IdentifiableEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "event_id")
     private Event event;
     private Long seat;
@@ -23,7 +23,7 @@ public class Ticket extends IdentifiableEntity {
      */
     private BigDecimal price;
     @OneToOne(cascade = CascadeType.ALL)
-    private Discount discount;
+    private Discount discount = new Discount();
 
     public Ticket(Event event, User user, long seat) {
         this.event = event;

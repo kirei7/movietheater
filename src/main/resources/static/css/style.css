@@ -13,9 +13,11 @@
     cursor: pointer;
     text-align: center;
 }
-
+.seat-item.seat-vip {
+    background: #fff200;
+}
 .seat-item.seat-targeted {
-    background: #1e7e34;
+    background: #1e7e34 !important;
 }
 .seat-item.seat-booked {
     background: #bd2130;

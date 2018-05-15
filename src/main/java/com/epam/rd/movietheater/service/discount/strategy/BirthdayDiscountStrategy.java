@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class BirthdayDiscountStrategy implements DiscountStrategy {
+public class BirthdayDiscountStrategy extends AbstractDisountStrategy implements DiscountStrategy {
 
     @Value("${discount.amount.birthday}")
     private int discountAmount;
@@ -32,7 +32,9 @@ public class BirthdayDiscountStrategy implements DiscountStrategy {
             if (dif <= 5)
                 calculatedDiscount = discountAmount;
             if (calculatedDiscount > Optional.ofNullable(ticket.getDiscount()).orElse(new Discount()).getAmount()) {
-                ticket.setDiscount(new Discount(getClass().getSimpleName(), ticket, discountAmount));
+                ticket.setDiscount(
+                        getMaxDiscount(ticket.getDiscount(), new Discount(getClass().getSimpleName(), ticket, discountAmount))
+                );
             }
         });
         return tickets;

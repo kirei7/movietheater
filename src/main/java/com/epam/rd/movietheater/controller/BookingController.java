@@ -1,13 +1,12 @@
 package com.epam.rd.movietheater.controller;
 
+import com.epam.rd.movietheater.model.Order;
 import com.epam.rd.movietheater.service.facade.BookingFacade;
 import com.epam.rd.movietheater.util.userprovider.UserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/booking")
 public class BookingController {
 
@@ -20,20 +19,14 @@ public class BookingController {
         this.bookingFacade = bookingFacade;
     }
 
-    @GetMapping("/event/{eventId}")
-    public String previewTicketsForSelectedSeats(@PathVariable Long eventId, long[] seats, Model model) {
-        model.addAttribute(
-                "tickets",
-                bookingFacade.createTickets(eventId, userProvider.getCurrentUser(), seats)
-        );
-        return "preview";
+    @PostMapping("/event/{eventId}/price")
+    public Order previewTicketsForSelectedSeats(@PathVariable Long eventId, @RequestBody long[] seats) {
+        return bookingFacade.previewOrder(eventId, userProvider.getCurrentUser(), seats);
     }
 
     @PostMapping(path = "/event/{eventId}")
-    public String bookTicketsForSelectedSeats(@PathVariable Long eventId, Model model, @RequestBody long[] seats) {
-        System.out.println(seats);
-        model.addAttribute("order", bookingFacade.buyTickets(eventId, userProvider.getCurrentUser(), seats));
-        return "bookingSuccessful";
+    public Order bookTicketsForSelectedSeats(@PathVariable Long eventId, @RequestBody long[] seats) {
+        return bookingFacade.buyTickets(eventId, userProvider.getCurrentUser(), seats);
     }
 
 }

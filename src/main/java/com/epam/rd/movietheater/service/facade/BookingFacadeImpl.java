@@ -4,6 +4,7 @@ import com.epam.rd.movietheater.exception.EventNotFoundException;
 import com.epam.rd.movietheater.model.Order;
 import com.epam.rd.movietheater.model.entity.Ticket;
 import com.epam.rd.movietheater.model.entity.User;
+import com.epam.rd.movietheater.security.UserRole;
 import com.epam.rd.movietheater.service.booking.BookingService;
 import com.epam.rd.movietheater.service.event.EventService;
 import com.epam.rd.movietheater.service.payment.PaymentService;
@@ -31,15 +32,33 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     @Override
-    @Transactional
-    public List<Ticket> createTickets(Long eventId, User user, long[] seats) {
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public Order previewOrder(Long eventId, User user, long[] seats) {
+        List<Ticket> tickets = createTickets(eventId, user, seats);
+        BigDecimal totalSum = calculateTotalSum(tickets);
+        totalSum.setScale(2);
+        return new Order(tickets, totalSum.toString());
+    }
+
+    private BigDecimal calculateTotalSum(List<Ticket> tickets) {
+        return tickets.stream().map(ticket -> {
+            BigDecimal price = ticket.getPrice();
+            BigDecimal discountAmount = calculateDiscountAmount(price, ticket.getDiscount().getAmount());
+            return price.subtract(discountAmount);
+        }).reduce(new BigDecimal(0), BigDecimal::add);
+    }
+
+    /**
+     * Creates ticket entities for given event and user,
+     * with their prices and discounts
+     */
+    private List<Ticket> createTickets(Long eventId, User user, long[] seats) {
         return bookingService.createTicketsForEvent(
                 eventService.getById(eventId).orElseThrow(EventNotFoundException::new),
                 user,
                 seats
         );
     }
-
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public Order buyTickets(Long eventId, User user, long[] seats) {
@@ -52,17 +71,12 @@ public class BookingFacadeImpl implements BookingFacade {
 
     private BigDecimal conductPayment(List<Ticket> tickets, User user) {
         BigDecimal totalSum = calculateTotalSum(tickets);
-        paymentService.withdrawFromAccount(user.getAccount(), totalSum);
+        if (!user.getRoles().contains(UserRole.BOOKING_MANAGER))
+            paymentService.withdrawFromAccount(user.getAccount(), totalSum);
         return totalSum;
     }
 
-    private BigDecimal calculateTotalSum(List<Ticket> tickets) {
-        return tickets.stream().map(ticket -> {
-            BigDecimal price = ticket.getPrice();
-            BigDecimal discountAmount = calculateDiscountAmount(price, ticket.getDiscount().getAmount());
-            return price.subtract(discountAmount);
-        }).reduce(new BigDecimal(0), BigDecimal::add);
-    }
+
 
     private BigDecimal calculateDiscountAmount(BigDecimal basePrice, int amount) {
         return basePrice.min(basePrice.divide(new BigDecimal(100)).multiply(new BigDecimal(amount)));

@@ -18,7 +18,7 @@ public class ViewUtils {
         return LongStream
                 .rangeClosed(0,event.getAuditorium().getNumberOfSeats())
                 .boxed()
-                .map(s -> new SeatView(s,purchased.contains(s)))
+                .map(s -> new SeatView(s, purchased.contains(s), event.getAuditorium().getVipSeats().contains(s)))
                 .collect(toList());
     }
 }

@@ -7,20 +7,19 @@ import com.epam.rd.movietheater.model.entity.Event;
 import com.epam.rd.movietheater.model.entity.IdentifiableEntity;
 import com.epam.rd.movietheater.model.entity.User;
 import com.epam.rd.movietheater.util.batch.update.BatchUpdater;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class JsonBatchUploader implements BatchUploader {
 
-    private Gson gson = new Gson();
+    private ObjectMapper serializer = new ObjectMapper();
     private Map<Class, BatchUpdater> updaters;
     private Map<Class, Class> dtoToEntityMapping;
 
@@ -51,12 +50,20 @@ public class JsonBatchUploader implements BatchUploader {
     }
 
     private <T> List<T> parseFile(MultipartFile file, Class<T> targetType) {
+        JavaType type = serializer.getTypeFactory().constructCollectionType(List.class, dtoToEntityMapping.get(targetType));
         try {
             String content = new String(file.getBytes());
+            return serializer.readValue(content, type);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+       /* try {
+
             Type collectionType = TypeToken.getParameterized(List.class, dtoToEntityMapping.get(targetType)).getType();
             return gson.fromJson(content, collectionType);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 }

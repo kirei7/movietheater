@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class PeriodicDiscountStrategy implements DiscountStrategy {
+public class PeriodicDiscountStrategy extends AbstractDisountStrategy implements DiscountStrategy {
 
     @Value("${discount.strategy.step}")
     private int step;
@@ -27,9 +27,9 @@ public class PeriodicDiscountStrategy implements DiscountStrategy {
     }
     private void calculateForTicket(Ticket ticket, int ticketNumber) {
         if (ticketNumber % 10 == 0 && ticketNumber > 0) {
-            if (discountAmount > ticket.getDiscount().getAmount()) {
-                ticket.setDiscount(new Discount(getClass().getSimpleName(), ticket, discountAmount));
-            }
+            ticket.setDiscount(
+                    getMaxDiscount(ticket.getDiscount(), new Discount(getClass().getSimpleName(), ticket, discountAmount))
+            );
         }
     }
 }
