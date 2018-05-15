@@ -1,3 +1,26 @@
 .login .login-link {
     display: none;
 }
+
+/*event page styles*/
+.seat-item {
+    padding: 6px 0;
+    margin: 3px;
+    width: 40px;
+    border: 1px solid #bbbbbb;
+    background: #eeeeee;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.seat-item.seat-targeted {
+    background: #1e7e34;
+}
+.seat-item.seat-booked {
+    background: #bd2130;
+}
+.seats-container {
+    width: 360px;
+}
+/*event page styles end*/

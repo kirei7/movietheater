@@ -23,7 +23,11 @@ public class BirthdayDiscountStrategy implements DiscountStrategy {
         tickets.forEach(ticket -> {
             int calculatedDiscount = 0;
             User user = ticket.getUser();
-            long dif = ChronoUnit.DAYS.between(user.getBirthday(), now.withYear(user.getBirthday().getYear()));
+            long dif;
+            if (!isUserValid(user))
+                dif = Long.MAX_VALUE;
+            else
+                dif = ChronoUnit.DAYS.between(user.getBirthday(), now.withYear(user.getBirthday().getYear()));
             dif = Math.abs(dif);
             if (dif <= 5)
                 calculatedDiscount = discountAmount;
@@ -32,5 +36,9 @@ public class BirthdayDiscountStrategy implements DiscountStrategy {
             }
         });
         return tickets;
+    }
+
+    private boolean isUserValid(User user) {
+        return user.getBirthday() != null;
     }
 }

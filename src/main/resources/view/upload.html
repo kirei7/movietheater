@@ -5,19 +5,23 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="custom-file mb-4">
-        <form class="form-group" method="post" action="batch/users" enctype="multipart/form-data">
-            <input class="custom-file-input" type="file" name="file" id="file-users">
-            <label class="custom-file-label" for="file-users">User upload:</label>
-            <button class="btn btn-primary my-2">Upload</button>
-        </form>
-    </div>
-    <div class="custom-file mt-4">
-        <form class="form-group" method="post" action="batch/events" enctype="multipart/form-data">
-            <input class="custom-file-input" type="file" name="file" id="file-events">
-            <label class="custom-file-label" for="file-events">Event upload:</label>
-            <button class="btn btn-primary my-2">Upload</button>
-        </form>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="custom-file mb-5">
+                <form class="form-group" method="post" action="batch/users" enctype="multipart/form-data">
+                    <input class="custom-file-input" type="file" name="file" id="file-users">
+                    <label class="custom-file-label" for="file-users">User upload:</label>
+                    <button class="btn btn-primary my-2">Upload</button>
+                </form>
+            </div>
+            <div class="custom-file mt-5">
+                <form class="form-group" method="post" action="batch/events" enctype="multipart/form-data">
+                    <input class="custom-file-input" type="file" name="file" id="file-events">
+                    <label class="custom-file-label" for="file-events">Event upload:</label>
+                    <button class="btn btn-primary my-2">Upload</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 <script>

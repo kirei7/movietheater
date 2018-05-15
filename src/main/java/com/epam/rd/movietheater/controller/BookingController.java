@@ -20,8 +20,8 @@ public class BookingController {
         this.bookingFacade = bookingFacade;
     }
 
-    @RequestMapping("/event/{eventId}")
-    public String previewTicketsForSelectedSeats(@PathVariable Long eventId, @RequestParam long[] seats, Model model) {
+    @GetMapping("/event/{eventId}")
+    public String previewTicketsForSelectedSeats(@PathVariable Long eventId, long[] seats, Model model) {
         model.addAttribute(
                 "tickets",
                 bookingFacade.createTickets(eventId, userProvider.getCurrentUser(), seats)
@@ -29,10 +29,10 @@ public class BookingController {
         return "preview";
     }
 
-    @RequestMapping(path = "/{eventId}", method = RequestMethod.POST)
-    public String bookTicketsForSelectedSeats(@PathVariable Long eventId, Model model, @RequestBody String arr) {
-        //model.addAttribute("order", bookingFacade.buyTickets(eventId, userProvider.getCurrentUser(), seats));
-        System.out.println(arr);
+    @PostMapping(path = "/event/{eventId}")
+    public String bookTicketsForSelectedSeats(@PathVariable Long eventId, Model model, @RequestBody long[] seats) {
+        System.out.println(seats);
+        model.addAttribute("order", bookingFacade.buyTickets(eventId, userProvider.getCurrentUser(), seats));
         return "bookingSuccessful";
     }
 
