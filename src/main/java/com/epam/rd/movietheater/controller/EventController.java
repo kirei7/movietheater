@@ -58,12 +58,6 @@ public class EventController {
         return "bookedForEvent";
     }
 
-    /*@GetMapping(value = "/{eventId}/tickets", headers = "Accept=application/pdf")
-    public ResponseEntity<byte[]> getTicketsForEventPdf(@PathVariable Long eventId) {
-        Map<String, Object> model = getTicketsForEventModel(eventId);
-        byte[] pdfFile = pdfGenerator.generatePdf(model, "bookedForEventPdf");
-        return createPdfResponceEntity(pdfFile);
-    }*/
     @GetMapping(value = "/{eventId}/tickets/pdf")
     public ResponseEntity<byte[]> getTicketsForEventPdf(@PathVariable Long eventId) {
         Map<String, Object> model = getTicketsForEventModel(eventId);

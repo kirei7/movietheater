@@ -7,9 +7,9 @@
 <body>
 <h1 th:text="|Booked tickets for event: ${event.name}|"></h1>
 <ul>
-    <li th:each="ticket : ${tickets}">
-        <p th:text="${ticket}"></p>
-    </li>
+    <div th:each="ticket : ${event.reservedTickets}">
+        <p th:text="|User: ${ticket.user.nickName}, Event: ${ticket.event.name}, Auditorium: ${ticket.event.auditorium.name}, Seat: ${ticket.seat}|"></p>
+    </div>
 </ul>
 </body>
 </html>

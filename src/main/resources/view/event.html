@@ -8,6 +8,8 @@
     <div class="row">
         <div class="col-12">
             <h3 th:text="|Event page for: ${event.name}, ${event.auditorium.name}|"></h3>
+            <p sec:authorize="hasAuthority('BOOKING_MANAGER')"><a
+                    th:href="@{${#httpServletRequest.requestURI + '/tickets'}}">View purchased tickets</a></p>
             <p>Available seats:</p>
             <div class="seats-container mb-2"
                  th:attr="data-event=${event.id}, data-url=${#httpServletRequest.requestURI}">

@@ -9,8 +9,8 @@
         <h1 th:text="|Booked tickets for event: ${event.name}|"></h1>
     </div>
     <div class="row">
-        <div class="col-12" th:each="ticket : ${tickets}">
-            <p th:text="${ticket}"></p>
+        <div class="col-12" th:each="ticket : ${event.reservedTickets}">
+            <p th:text="|User: ${ticket.user.nickName}, Event: ${ticket.event.name}, Auditorium: ${ticket.event.auditorium.name}, Seat: ${ticket.seat}|"></p>
         </div>
     </div>
     <div class="row">
