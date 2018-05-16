@@ -31,7 +31,7 @@ public class BatchUploadController {
                 "uploadedList",
                 batchUploader.performUpload(file, User.class)
         );
-        return "uploaded";
+        return "uploadedUsers";
     }
 
     @RequestMapping(value = "/events", method = RequestMethod.POST)
@@ -41,7 +41,7 @@ public class BatchUploadController {
                 "uploadedList",
                 uploaded
         );
-        return "uploaded";
+        return "uploadedEvents";
     }
 
     @GetMapping

@@ -13,10 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class CustomExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
-    public ModelAndView testErrorHandler(Exception ex, Model model) {
+    public ModelAndView commonErrorHandler(Exception ex, Model model) {
         ModelAndView mav = new ModelAndView();
         ex.printStackTrace();
-        mav.addObject("exceptionMessage", ex.getMessage());
+        String msg = ex.getMessage();
+        mav.addObject("exceptionMessage", msg == null ? ex.getClass().getSimpleName() : msg);
         mav.setViewName("error");
         return mav;
     }
@@ -24,7 +25,8 @@ public class CustomExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = NotEnoughMoneyException.class)
     @ResponseBody
-    public String handleException(Exception ex) {
+    public String notEnoughMoneyException(Exception ex) {
         return ex.getMessage();
     }
+
 }

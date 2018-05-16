@@ -32,7 +32,7 @@ public class EventDaoImpl implements EventDao {
     @Override
     public boolean remove(Event event) {
         eventRepository.delete(event);
-        return eventRepository.findById(event.getId()).isPresent();
+        return !eventRepository.findById(event.getId()).isPresent();
     }
 
     @Override

@@ -1,12 +1,14 @@
 [
   {
-    "nickName": "testUser",
+    "nickName": "user",
     "password": "1111",
-    "email": "example@mail.com"
+    "email": "example@mail.com",
+    "birthday": "2000-01-01"
   },
   {
     "nickName": "user2",
     "password": "1111",
-    "email": "exam@mail.com"
+    "email": "exam@mail.com",
+    "birthday": "1984-05-17"
   }
 ]

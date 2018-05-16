@@ -15,7 +15,7 @@
             <p th:text="|Tickets bought:|" class="text-center"></p>
         </div>
         <div class="col-md-6">
-            <p sec:authorize="!hasAuthority('BOOKING_MANAGER')" th:text="'Account sum:$' + ${user.account.amount}"></p>
+            <p sec:authorize="!hasAuthority('BOOKING_MANAGER')" th:text="'Account sum: $' + ${user.account.amount}"></p>
             <form class="form-inline" action="/booking/refill" method="post">
                 <div class="form-group mx-sm-3 mb-2">
                     <input type="text" class="form-control" name="amount" id="amount" placeholder="Amount...">

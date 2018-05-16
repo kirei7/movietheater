@@ -19,7 +19,7 @@ public class User extends IdentifiableEntity {
     private String lastName;
     private String email;
     private LocalDate birthday;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Ticket> tickets = new HashSet<>();
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     @JoinTable(name = "roles", joinColumns = @JoinColumn(name = "user_id"))

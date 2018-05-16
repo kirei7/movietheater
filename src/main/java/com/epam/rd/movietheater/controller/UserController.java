@@ -1,11 +1,12 @@
 package com.epam.rd.movietheater.controller;
 
+import com.epam.rd.movietheater.exception.AccessDeniedException;
 import com.epam.rd.movietheater.exception.UserNotFoundException;
 import com.epam.rd.movietheater.model.dto.UserDto;
 import com.epam.rd.movietheater.model.entity.User;
-import com.epam.rd.movietheater.service.facade.BookingFacade;
 import com.epam.rd.movietheater.service.facade.UserFacade;
 import com.epam.rd.movietheater.service.user.UserService;
+import com.epam.rd.movietheater.util.userprovider.UserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,18 +24,22 @@ public class UserController {
 
     private UserService userService;
     private UserFacade userFacade;
-    private BookingFacade bookingFacade;
+    private UserProvider userProvider;
 
     @Autowired
-    public UserController(UserService userService, UserFacade userFacade, BookingFacade bookingFacade) {
+    public UserController(UserService userService, UserFacade userFacade, UserProvider userProvider) {
         this.userService = userService;
         this.userFacade = userFacade;
-        this.bookingFacade = bookingFacade;
+        this.userProvider = userProvider;
     }
 
     @GetMapping("/{userId}")
     public String getUser(@PathVariable Long userId, Model model) {
-        model.addAttribute("user", userService.getById(userId).orElseThrow(UserNotFoundException::new));
+        User target = userService.getById(userId).orElseThrow(UserNotFoundException::new);
+        User logged = userProvider.getCurrentUser();
+        if (!target.getNickName().equals(logged.getNickName()))
+            throw new AccessDeniedException();
+        model.addAttribute("user", target);
         return "user";
     }
 
