@@ -16,7 +16,7 @@ public class ViewUtils {
     public List<SeatView> getSeatViews(Event event) {
         Set<Long> purchased = event.getReservedTickets().stream().mapToLong(Ticket::getSeat).boxed().collect(toSet());
         return LongStream
-                .rangeClosed(0,event.getAuditorium().getNumberOfSeats())
+                .rangeClosed(0, event.getAuditorium().getNumberOfSeats() - 1)
                 .boxed()
                 .map(s -> new SeatView(s, purchased.contains(s), event.getAuditorium().getVipSeats().contains(s)))
                 .collect(toList());

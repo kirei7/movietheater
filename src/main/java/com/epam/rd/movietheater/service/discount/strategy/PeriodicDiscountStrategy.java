@@ -21,7 +21,7 @@ public class PeriodicDiscountStrategy extends AbstractDisountStrategy implements
         User user = tickets.get(0).getUser();
         int alreadyBought = user.getTickets().size() + 1;
         for (int i = 0; i < tickets.size(); i++) {
-            calculateForTicket(tickets.get(0), alreadyBought + i);
+            calculateForTicket(tickets.get(i), alreadyBought + i);
         }
         return tickets;
     }

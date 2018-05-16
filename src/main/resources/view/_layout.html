@@ -38,6 +38,11 @@
                     <a href="/batch">Batch upload</a>
                 </span>
             </li>
+            <li sec:authorize="hasAuthority('BOOKING_MANAGER')" class="nav-item">
+                <span class="nav-link">
+                    <a href="/stats/discounts">Discount stats</a>
+                </span>
+            </li>
             <li class="nav-item">
                 <span class="nav-link">
                     <a href="/logout">Logout</a>

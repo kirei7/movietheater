@@ -83,7 +83,7 @@ function collectSeatsData() {
         let tickets = data.bookedTickets;
         for(let i = 0; i < tickets.length; i++) {
             let listItem = $("#cloneable ul li").clone();
-            listItem.find(".preview-ticket-body").text("Seat: " + tickets[i].seat + ", price: " + tickets[i].price);
+            listItem.find(".preview-ticket-body").text("Seat: " + (tickets[i].seat + 1) + ", price: " + tickets[i].price);
             if (tickets[i].discount.type != null) {
                 listItem
                     .find(".preview-ticket-discount")

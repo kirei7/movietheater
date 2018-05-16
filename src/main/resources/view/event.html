@@ -19,7 +19,7 @@
                             <div th:each="seat : ${@viewUtils.getSeatViews(event)}">
                                 <div class="seat-item" th:attr="data-id=${seat.number}"
                                      th:classappend="${seat.booked ? 'seat-booked' : 'seat-free'}  + ' ' + ${seat.vip ? 'seat-vip' : ''} ">
-                                    <span th:text="${seat.number}"></span>
+                                    <span th:text="${seat.number + 1}"></span>
                                 </div>
                             </div>
                         </div>
