@@ -34,13 +34,22 @@ function sendBookingRequest() {
         dataType: "json",
         data: JSON.stringify(seatsData),
         success: function (data) {
-            alert("Purchased tickets for total sum: " + data.sum);
-            location.reload();
+            $("#exampleModalLabel").text("Bought tickets for total: $" + data.sum);
+            $('#exampleModal').modal('show');
+            $('#exampleModal').on('hidden.bs.modal', function (e) {
+              location.reload();
+            })
+        },
+        error: function (msg) {
+            $("#exampleModalLabel").text(msg.responseText);
+            $('#exampleModal').modal('show');
         }
     });
 }
 
 function sendPriceRequest() {
+    $(".preview-price-tickets").empty();
+    $(".preview-price-total").text("");
     var seatsData = collectSeatsData();
     if (seatsData.length <= 0)
         return;
@@ -71,7 +80,6 @@ function collectSeatsData() {
 
     function renderData(data) {
         console.log(data);
-        $(".preview-price-tickets").empty();
         let tickets = data.bookedTickets;
         for(let i = 0; i < tickets.length; i++) {
             let listItem = $("#cloneable ul li").clone();

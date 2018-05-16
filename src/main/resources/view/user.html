@@ -12,15 +12,28 @@
             <p th:text="|Last name: ${user.lastName}|"></p>
             <p th:text="|Email: ${user.email}|"></p>
             <p th:text="|Birth date: ${user.birthday}|"></p>
-            <p th:text="|Tickets bought:|"></p>
-            <ul>
-                <li th:each="ticket : ${user.tickets}">
-                    <span th:text="${ticket}"></span>
-                </li>
-            </ul>
+            <p th:text="|Tickets bought:|" class="text-center"></p>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>Seat</th>
+                    <th>Price</th>
+                    <th>Discount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ticket : ${user.tickets}">
+                    <th th:text="${ticket.event.name}"></th>
+                    <th th:text="${ticket.seat}"></th>
+                    <th th:text="${ticket.price}"></th>
+                    <th th:text="${ticket.discount.amount == 0 ? '' : ticket.discount.amount}"></th>
+                </tr>
+                </tbody>
+            </table>
         </div>
         <div class="col-md-6">
-            <p th:text="'Account sum:$' + ${user.account.amount}"></p>
+            <p sec:authorize="!hasAuthority('BOOKING_MANAGER')" th:text="'Account sum:$' + ${user.account.amount}"></p>
             <form class="form-inline" action="/booking/refill" method="post">
                 <div class="form-group mx-sm-3 mb-2">
                     <input type="text" class="form-control" name="amount" id="amount" placeholder="Amount...">

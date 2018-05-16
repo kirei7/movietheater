@@ -1,5 +1,6 @@
 package com.epam.rd.movietheater.service.payment;
 
+import com.epam.rd.movietheater.exception.NotEnoughMoneyException;
 import com.epam.rd.movietheater.model.entity.UserAccount;
 import com.epam.rd.movietheater.service.useraccount.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
         BigDecimal availableSum = userAccount.getAmount();
         if (availableSum.compareTo(amount) < 0) {
-            throw new IllegalArgumentException("Not enough money on account");
+            throw new NotEnoughMoneyException();
         }
         userAccount.setAmount(availableSum.subtract(amount));
         userAccountService.save(userAccount);
