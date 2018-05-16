@@ -3,6 +3,7 @@ package com.epam.rd.movietheater.controller;
 import com.epam.rd.movietheater.exception.UserNotFoundException;
 import com.epam.rd.movietheater.model.dto.UserDto;
 import com.epam.rd.movietheater.model.entity.User;
+import com.epam.rd.movietheater.service.facade.BookingFacade;
 import com.epam.rd.movietheater.service.facade.UserFacade;
 import com.epam.rd.movietheater.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,13 @@ public class UserController {
 
     private UserService userService;
     private UserFacade userFacade;
+    private BookingFacade bookingFacade;
 
     @Autowired
-    public UserController(UserService userService, UserFacade userFacade) {
+    public UserController(UserService userService, UserFacade userFacade, BookingFacade bookingFacade) {
         this.userService = userService;
         this.userFacade = userFacade;
+        this.bookingFacade = bookingFacade;
     }
 
     @GetMapping("/{userId}")

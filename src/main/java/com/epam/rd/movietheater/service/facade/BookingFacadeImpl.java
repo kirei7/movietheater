@@ -25,10 +25,12 @@ public class BookingFacadeImpl implements BookingFacade {
     private EventService eventService;
     private PaymentService paymentService;
 
+
     @Autowired
-    public BookingFacadeImpl(BookingService bookingService, EventService eventService, UserService userService, UserAccountService userAccountService) {
+    public BookingFacadeImpl(BookingService bookingService, EventService eventService, UserService userService, UserAccountService userAccountService, PaymentService paymentService) {
         this.bookingService = bookingService;
         this.eventService = eventService;
+        this.paymentService = paymentService;
     }
 
     @Override
@@ -85,6 +87,6 @@ public class BookingFacadeImpl implements BookingFacade {
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void replenishAccount(User user, Long amount) {
-
+        paymentService.refillAccount(user.getAccount(), amount);
     }
 }

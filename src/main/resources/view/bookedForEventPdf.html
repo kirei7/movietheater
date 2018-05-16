@@ -6,10 +6,26 @@
 </head>
 <body>
 <h1 th:text="|Booked tickets for event: ${event.name}|"></h1>
-<ul>
-    <div th:each="ticket : ${event.reservedTickets}">
-        <p th:text="|User: ${ticket.user.nickName}, Event: ${ticket.event.name}, Auditorium: ${ticket.event.auditorium.name}, Seat: ${ticket.seat}|"></p>
-    </div>
-</ul>
+<table border="1">
+    <thead>
+    <tr>
+        <th scope="col">User</th>
+        <th scope="col">Event</th>
+        <th scope="col">Auditorium</th>
+        <th scope="col">Seat</th>
+        <th scope="col">Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ticket : ${event.reservedTickets}">
+        <td th:text="${ticket.user.nickName}"></td>
+        <td th:text="${ticket.event.name}"></td>
+        <td th:text="${ticket.event.auditorium.name}"></td>
+        <td th:text="${ticket.seat}"></td>
+        <td th:text="${ticket.price}"></td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>

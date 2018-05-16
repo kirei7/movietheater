@@ -11,20 +11,38 @@
             <p sec:authorize="hasAuthority('BOOKING_MANAGER')"><a
                     th:href="@{${#httpServletRequest.requestURI + '/tickets'}}">View purchased tickets</a></p>
             <p>Available seats:</p>
-            <div class="seats-container mb-2"
-                 th:attr="data-event=${event.id}, data-url=${#httpServletRequest.requestURI}">
-                <div class="d-flex flex-wrap">
-                    <div th:each="seat : ${@viewUtils.getSeatViews(event)}">
-                        <div class="seat-item" th:attr="data-id=${seat.number}"
-                             th:classappend="${seat.booked ? 'seat-booked' : 'seat-free'}  + ' ' + ${seat.vip ? 'seat-vip' : ''} ">
-                            <span th:text="${seat.number}"></span>
+            <div class="row justify-content-around">
+                <div class="col-md-4">
+                    <div class="seats-container mb-2"
+                         th:attr="data-event=${event.id}, data-url=${#httpServletRequest.requestURI}">
+                        <div class="d-flex flex-wrap">
+                            <div th:each="seat : ${@viewUtils.getSeatViews(event)}">
+                                <div class="seat-item" th:attr="data-id=${seat.number}"
+                                     th:classappend="${seat.booked ? 'seat-booked' : 'seat-free'}  + ' ' + ${seat.vip ? 'seat-vip' : ''} ">
+                                    <span th:text="${seat.number}"></span>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    <button class="book-tickets btn btn-success">Book tickets</button>
+                </div>
+                <div class="col-md-5">
+                    <div class="card bg-secondary text-white p-3">
+                        <p>Preview tickets:</p>
+                        <ul class="preview-price-tickets"></ul>
+                        <strong>Total price: <span class="preview-price-total"></span></strong>
                     </div>
                 </div>
             </div>
-            <button class="book-tickets btn btn-success">Book tickets</button>
-            <button class="price-tickets btn btn-primary">Preview price</button>
         </div>
+    </div>
+    <div id="cloneable" class="d-none">
+        <ul>
+            <li>
+                <span class="preview-ticket-body"></span><br>
+                <span class="preview-ticket-discount"></span>
+            </li>
+        </ul>
     </div>
     <script src="/static/js/bookTickets.js"></script>
 </div>

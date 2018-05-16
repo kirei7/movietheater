@@ -20,6 +20,7 @@ function changeStatus(target) {
     if (target.hasClass("seat-booked"))
         return;
     target.toggleClass("seat-targeted");
+    sendPriceRequest();
 }
 
 function sendBookingRequest() {
@@ -50,7 +51,9 @@ function sendPriceRequest() {
         dataType: "json",
         data: JSON.stringify(seatsData),
         success: function (data) {
-            alert("Total sum for tickets: " + data.sum);
+            //alert("Total sum for tickets: " + data.sum);
+            data.bookedTickets = JSON.parse(data.bookedTickets);
+            renderData(data);
         }
     });
 }
@@ -64,4 +67,21 @@ function collectSeatsData() {
         seatsData.push(parseInt(item));
     });
     return seatsData;
+    }
+
+    function renderData(data) {
+        console.log(data);
+        $(".preview-price-tickets").empty();
+        let tickets = data.bookedTickets;
+        for(let i = 0; i < tickets.length; i++) {
+            let listItem = $("#cloneable ul li").clone();
+            listItem.find(".preview-ticket-body").text("Seat: " + tickets[i].seat + ", price: " + tickets[i].price);
+            if (tickets[i].discount.type != null) {
+                listItem
+                    .find(".preview-ticket-discount")
+                    .text("(" + tickets[i].discount.amount + "% discount - " + tickets[i].discount.type +")")
+            }
+            $(".preview-price-tickets").append(listItem);
+        }
+        $(".preview-price-total").text(data.sum);
     }
