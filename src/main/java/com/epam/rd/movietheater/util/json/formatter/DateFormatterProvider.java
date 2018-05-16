@@ -4,4 +4,6 @@ import java.time.format.DateTimeFormatter;
 
 public interface DateFormatterProvider {
     DateTimeFormatter getFormatter();
+
+    DateTimeFormatter getDateFormatter();
 }

@@ -13,6 +13,19 @@
             <p th:text="|Email: ${user.email}|"></p>
             <p th:text="|Birth date: ${user.birthday}|"></p>
             <p th:text="|Tickets bought:|" class="text-center"></p>
+        </div>
+        <div class="col-md-6">
+            <p sec:authorize="!hasAuthority('BOOKING_MANAGER')" th:text="'Account sum:$' + ${user.account.amount}"></p>
+            <form class="form-inline" action="/booking/refill" method="post">
+                <div class="form-group mx-sm-3 mb-2">
+                    <input type="text" class="form-control" name="amount" id="amount" placeholder="Amount...">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Refill account</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
             <table class="table">
                 <thead>
                 <tr>
@@ -31,15 +44,6 @@
                 </tr>
                 </tbody>
             </table>
-        </div>
-        <div class="col-md-6">
-            <p sec:authorize="!hasAuthority('BOOKING_MANAGER')" th:text="'Account sum:$' + ${user.account.amount}"></p>
-            <form class="form-inline" action="/booking/refill" method="post">
-                <div class="form-group mx-sm-3 mb-2">
-                    <input type="text" class="form-control" name="amount" id="amount" placeholder="Amount...">
-                </div>
-                <button type="submit" class="btn btn-primary mb-2">Refill account</button>
-            </form>
         </div>
     </div>
 </div>
