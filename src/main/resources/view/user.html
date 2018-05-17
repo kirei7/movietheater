@@ -8,14 +8,29 @@
     <div class="row">
         <div class="col-md-6">
             <h3 th:text="|User: ${user.nickName}|"></h3>
-            <p th:text="|First name: ${user.firstName}|"></p>
-            <p th:text="|Last name: ${user.lastName}|"></p>
-            <p th:text="|Email: ${user.email}|"></p>
-            <p th:text="|Birth date: ${user.birthday}|"></p>
-            <p th:text="|Tickets bought:|" class="text-center"></p>
+            <form th:method="post" th:action="@{/users/update}" th:object="${user}">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="FirstName..."
+                           th:field="*{firstName}" th:text="${user.firstName==null ? '' : user.firstName}">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="LastName..."
+                           th:field="*{lastName}" th:text="${user.lastName==null ? '' : user.lastName}">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Email"
+                           th:field="*{email}" th:text="${user.email==null ? '' : user.email}">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="BirthDate"
+                           th:field="*{birthday}" th:text="${user.birthday==null ? '' : user.birthday}">
+                </div>
+                <input type="submit" value="Save changes"/>
+            </form>
         </div>
-        <div class="col-md-6">
-            <p sec:authorize="!hasAuthority('BOOKING_MANAGER')" th:text="'Account sum: $' + ${user.account.amount}"></p>
+        <div sec:authorize="! hasRole('BOOKING_MANAGER')" class="col-md-6">
+            <h3 th:text="Refill account"></h3>
+            <p th:text="'Account sum: $' + ${user.account.amount}"></p>
             <form class="form-inline" action="/booking/refill" method="post">
                 <div class="form-group mx-sm-3 mb-2">
                     <input type="text" class="form-control" name="amount" id="amount" placeholder="Amount...">
@@ -26,6 +41,7 @@
     </div>
     <div class="row">
         <div class="col">
+            <p th:text="|Tickets bought:|" class="text-center"></p>
             <table class="table">
                 <thead>
                 <tr>

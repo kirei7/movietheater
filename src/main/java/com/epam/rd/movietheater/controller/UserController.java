@@ -43,6 +43,14 @@ public class UserController {
         return "user";
     }
 
+    @PostMapping("/update")
+    public String updateUser(User user, Model model) {
+        userService.save(user);
+        model.addAttribute("user", user);
+        return "user";
+    }
+
+
     @GetMapping("/register")
     public String getRegisterPage(Model model) {
         User newUser = new User();
