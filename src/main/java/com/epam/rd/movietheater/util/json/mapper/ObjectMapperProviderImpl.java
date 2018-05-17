@@ -1,6 +1,7 @@
 package com.epam.rd.movietheater.util.json.mapper;
 
 import com.epam.rd.movietheater.util.json.LocalDateTimeToStringConverter;
+import com.epam.rd.movietheater.util.json.LocalDateToStringConverter;
 import com.epam.rd.movietheater.util.json.StringToLocalDateConverter;
 import com.epam.rd.movietheater.util.json.StringToLocalDateTimeConverter;
 import com.epam.rd.movietheater.util.json.formatter.DateFormatterProvider;
@@ -19,13 +20,15 @@ public class ObjectMapperProviderImpl implements ObjectMapperProvider {
     private StringToLocalDateTimeConverter stringToLocalDateTimeConverter;
     private LocalDateTimeToStringConverter localDateTimeToStringConverter;
     private StringToLocalDateConverter stringToLocalDateConverter;
+    private LocalDateToStringConverter localDateToStringConverter;
 
     @Autowired
-    public ObjectMapperProviderImpl(DateFormatterProvider dateFormatterProvider, StringToLocalDateTimeConverter converter, LocalDateTimeToStringConverter localDateTimeToStringConverter, StringToLocalDateConverter stringToLocalDateConverter) {
+    public ObjectMapperProviderImpl(DateFormatterProvider dateFormatterProvider, StringToLocalDateTimeConverter converter, LocalDateTimeToStringConverter localDateTimeToStringConverter, StringToLocalDateConverter stringToLocalDateConverter, LocalDateToStringConverter localDateToStringConverter) {
         this.dateFormatterProvider = dateFormatterProvider;
         this.stringToLocalDateTimeConverter = converter;
         this.localDateTimeToStringConverter = localDateTimeToStringConverter;
         this.stringToLocalDateConverter = stringToLocalDateConverter;
+        this.localDateToStringConverter = localDateToStringConverter;
     }
 
     @Override
@@ -35,6 +38,7 @@ public class ObjectMapperProviderImpl implements ObjectMapperProvider {
         module.addDeserializer(LocalDateTime.class, stringToLocalDateTimeConverter);
         module.addDeserializer(LocalDate.class, stringToLocalDateConverter);
         module.addSerializer(LocalDateTime.class, localDateTimeToStringConverter);
+        module.addSerializer(LocalDate.class, localDateToStringConverter);
         mapper.registerModule(module);
         return mapper;
     }

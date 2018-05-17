@@ -54,6 +54,7 @@ public class PropertyBasedAuditoriumSource implements AuditoriumSource {
             newAuditorium.setName(name);
             return newAuditorium;
         } catch (Exception ex) {
+            ex.printStackTrace();
             throw new WrongAuditoriumSourceFileFormatException("invalid json");
         }
     }
